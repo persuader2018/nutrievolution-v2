@@ -1,0 +1,50 @@
+{
+  "id": "/",
+  "name": "Nutrievolution - Diario Nutricional IA",
+  "short_name": "Nutrievolution",
+  "description": "Diario nutricional inteligente que analiza tus platos por IA, calcula macronutrientes y registra tu evolución diaria, semanal y mensual.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "es-ES",
+  "dir": "ltr",
+  "categories": [
+    "health",
+    "fitness",
+    "lifestyle",
+    "food"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Diario nutricional y análisis por IA"
+    }
+  ]
+}
