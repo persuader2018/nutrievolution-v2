@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Nutrievolution V4 - Diario Nutricional con IA</title>
+  <title>Nutrievolution - Diario Nutricional con IA</title>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0f172a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #cbd5e1; /* Fondo pastel contrastado */
+      --bg: #cbd5e1; /* Fondo pastel suave con excelente contraste */
       --card: #ffffff;
       --card-subtle: #f8fafc;
-      --border-field: #64748b; /* Borde muy marcado para inputs */
+      --border-field: #64748b; /* Borde oscuro y firme para campos */
       --border-card: #94a3b8;
       --border-light: #e2e8f0;
       --text: #0f172a;
@@ -26,17 +26,19 @@
       --blue-dark: #1d4ed8;
       --blue-light: #dbeafe;
       --amber: #d97706;
+      --amber-dark: #b45309;
       --amber-light: #fef3c7;
       --rose: #e11d48;
       --rose-light: #ffe4e6;
       --indigo: #4338ca;
       --indigo-dark: #3730a3;
       --indigo-light: #e0e7ff;
-      --purple: #7c3aed;
+      --btn-gray: #e2e8f0;
+      --btn-gray-dark: #cbd5e1;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       padding: 12px 14px 105px 14px;
@@ -48,53 +50,93 @@
       line-height: 1.5;
     }
 
-    /* Cabecera estilo InquiCheck */
+    /* 1. ENCABEZADO Y TÍTULO MÁS LLAMATIVO (SIN VERSIÓN) */
     .app-header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #312e81 100%);
       color: #ffffff;
-      padding: 16px 18px;
-      border-radius: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      padding: 18px 20px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.28), 0 0 1px 1px rgba(255, 255, 255, 0.15) inset;
+      border: 2px solid rgba(255, 255, 255, 0.18);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
+      overflow: hidden;
     }
-    .brand-title {
-      font-size: 21px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
+    .app-header::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0) 70%);
+      pointer-events: none;
+    }
+    .brand-container {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
       cursor: pointer;
       user-select: none;
     }
-    .badge-v4 {
-      background: #10b981;
-      color: #ffffff;
-      font-size: 11px;
+    .brand-title {
+      font-size: 23px;
       font-weight: 900;
-      padding: 3px 8px;
+      letter-spacing: -0.6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .brand-title .logo-glow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 10px;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.45);
+    }
+    .brand-tagline {
+      font-size: 11.5px;
+      color: #cbd5e1;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-top: 2px;
+      margin-left: 46px;
+    }
+    .badge-privacy {
+      font-size: 12px;
+      font-weight: 800;
+      color: #a7f3d0;
+      background: rgba(16, 185, 129, 0.18);
+      padding: 6px 12px;
       border-radius: 99px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* Tarjetas con sombras y bordes marcados */
+    /* Tarjetas con sombras suaves y definidas */
     .card {
       background: var(--card);
       padding: 18px;
       border-radius: 18px;
       margin-bottom: 15px;
       border: 2px solid var(--border-card);
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
     }
     .card-highlight {
-      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
       border: 2px solid #64748b;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
     }
 
     h3 {
@@ -107,25 +149,25 @@
       gap: 8px;
     }
 
-    /* REQUISITO 1: CAMPOS DE ENTRADA MUY DEFINIDOS, MARCADOS Y CON SOMBRAS */
+    /* 2. CUADROS DE TEXTO: FONDO BLANCO CON LIGERO SOMBREADO */
     input, select, textarea {
       width: 100%;
       padding: 12px 14px;
       margin-top: 5px;
       border-radius: 12px;
       border: 2px solid var(--border-field);
-      background: #ffffff;
+      background: #ffffff !important;
       color: var(--text);
       font-size: 15px;
       font-weight: 700;
       outline: none;
       font-family: inherit;
-      box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.05), 0 2px 4px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.07), inset 0 1px 2px rgba(0,0,0,0.03);
       transition: all 0.2s ease;
     }
     input:focus, select:focus, textarea:focus {
       border-color: var(--indigo);
-      box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.2), inset 0 1px 2px rgba(0,0,0,0.05);
+      box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.2), 0 2px 6px rgba(0,0,0,0.06);
       background: #ffffff;
     }
     label {
@@ -136,10 +178,10 @@
       margin-top: 8px;
     }
 
-    /* REQUISITO 1: BOTONES MUY DEFINIDOS, CON RELIEVE Y SOMBRAS POTENTES */
+    /* 2. BOTONES: NUNCA FONDO BLANCO, CON COLOR, RELIEVE Y LIGERO SOMBREADO */
     .btn {
-      background: var(--green);
       color: #ffffff;
+      background: var(--green);
       border: 2px solid var(--green-dark);
       padding: 13px 16px;
       border-radius: 12px;
@@ -153,62 +195,67 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.32), 0 2px 4px rgba(0,0,0,0.08);
       transition: all 0.15s ease;
     }
     .btn:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     .btn-blue {
       background: var(--blue);
       border: 2px solid var(--blue-dark);
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.32), 0 2px 4px rgba(0,0,0,0.08);
     }
     .btn-indigo {
       background: var(--indigo);
       border: 2px solid var(--indigo-dark);
-      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.32), 0 2px 4px rgba(0,0,0,0.08);
     }
     .btn-amber {
-      background: #d97706;
-      border: 2px solid #b45309;
+      background: var(--amber);
+      border: 2px solid var(--amber-dark);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.32), 0 2px 4px rgba(0,0,0,0.08);
     }
 
-    /* REQUISITO 2: BOTÓN COMPARTIR CON FUNCIÓN IA PREMIUM */
-    .btn-share-ai {
-      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #db2777 100%);
-      border: 2px solid #312e81;
-      color: #ffffff;
-      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45), 0 2px 4px rgba(0,0,0,0.12);
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 0.2px;
-    }
-    .btn-share-ai:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
-    }
-
+    /* Botones secundarios (antes blancos): Ahora con fondo de color pastel/gris sólido distintivo */
     .btn-outline {
-      background: #ffffff;
-      color: var(--text);
-      border: 2px solid var(--border-field);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      background: #e2e8f0; /* Fondo con contraste claro frente a los inputs blancos */
+      color: #0f172a;
+      border: 2px solid #64748b;
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(0,0,0,0.05);
       font-weight: 800;
     }
+    .btn-outline:hover {
+      background: #cbd5e1;
+    }
     .btn-outline:active {
-      background: #e2e8f0;
+      background: #94a3b8;
       transform: translateY(1px);
     }
     .btn-outline.active {
       background: var(--indigo-light);
       border-color: var(--indigo);
       color: var(--indigo);
-      box-shadow: 0 3px 8px rgba(67, 56, 202, 0.2);
+      box-shadow: 0 3px 10px rgba(67, 56, 202, 0.25);
     }
+
+    /* Botón para Compartir IA Premium */
+    .btn-share-ai {
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #db2777 100%);
+      border: 2px solid #312e81;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4), 0 2px 5px rgba(0,0,0,0.12);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
+    .btn-share-ai:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+    }
+
     .btn-red {
       background: #fee2e2;
       color: var(--rose);
@@ -218,7 +265,7 @@
       font-size: 13px;
       font-weight: 800;
       margin: 0;
-      box-shadow: 0 2px 5px rgba(225, 29, 72, 0.15);
+      box-shadow: 0 2px 6px rgba(225, 29, 72, 0.18);
     }
     .btn-star {
       background: transparent;
@@ -249,7 +296,7 @@
       border-radius: 12px;
       object-fit: cover;
       border: 2px solid var(--border-field);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
       cursor: pointer;
     }
     .lista-scroll { max-height: 320px; overflow-y: auto; margin-top: 10px; padding-right: 4px; }
@@ -264,13 +311,13 @@
       display: grid; grid-template-columns: 1fr 1.15fr 1fr;
       padding: 10px 14px 14px 14px; gap: 10px; z-index: 99;
       max-width: 560px; margin: 0 auto;
-      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.32);
     }
     .nav-btn {
       background: #1e293b; color: #94a3b8; border: 1.5px solid #475569;
       padding: 10px 8px; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; text-align: center;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
       transition: all 0.2s ease;
     }
     .nav-btn.active {
@@ -321,19 +368,27 @@
       max-width: 100%; max-height: 74vh; border-radius: 14px; object-fit: contain; background: #000;
       border: 2px solid #475569;
     }
+
+    /* Chips de categorías y modos: con fondo suave diferenciado del blanco */
     .chip-cat {
-      font-size: 13px; padding: 8px 13px; border-radius: 99px; border: 2px solid var(--border-field);
-      background: #ffffff; color: var(--text); cursor: pointer; white-space: nowrap; font-weight: 800;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+      font-size: 13px; padding: 8px 14px; border-radius: 99px; border: 2px solid var(--border-field);
+      background: #e2e8f0; color: var(--text); cursor: pointer; white-space: nowrap; font-weight: 800;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
-    .chip-cat.active { background: var(--text); color: #fff; border-color: var(--text); box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25); }
+    .chip-cat.active {
+      background: var(--text); color: #fff; border-color: var(--text);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.3);
+    }
 
     .chip-modo {
       font-size: 13px; padding: 9px 12px; border-radius: 10px; border: 2px solid var(--border-field);
-      background: #ffffff; color: var(--text); cursor: pointer; font-weight: 800; flex: 1; text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+      background: #e2e8f0; color: var(--text); cursor: pointer; font-weight: 800; flex: 1; text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
-    .chip-modo.active { background: var(--indigo); color: #fff; border-color: var(--indigo-dark); box-shadow: 0 3px 8px rgba(67, 56, 202, 0.3); }
+    .chip-modo.active {
+      background: var(--indigo); color: #fff; border-color: var(--indigo-dark);
+      box-shadow: 0 4px 10px rgba(67, 56, 202, 0.35);
+    }
 
     /* Bloques de tomas del día */
     .comida-block {
@@ -373,20 +428,23 @@
     }
     .app-footer a:hover { text-decoration: underline; }
 
-    /* Contenedor canvas oculto para generación de imagen */
+    /* Canvas oculto para generación de imagen en pantalla completa (1080 x 1920) */
     #canvasShareHidden { display: none; }
   </style>
 </head>
 <body>
 
-  <!-- CABECERA PRINCIPAL -->
+  <!-- CABECERA PRINCIPAL LLAMATIVA (SIN VERSIÓN) -->
   <header class="app-header">
-    <div class="brand-title" id="logoApp" title="Pulsar 5 veces para Ajustes de Desarrollador">
-      <span>🥗 Nutrievolution</span>
-      <span class="badge-v4">V4 PRO</span>
+    <div class="brand-container" id="logoApp" title="Pulsar 5 veces para Ajustes de Desarrollador">
+      <div class="brand-title">
+        <span class="logo-glow">🥗</span>
+        <span>Nutrievolution</span>
+      </div>
+      <div class="brand-tagline">Inteligencia Nutricional</div>
     </div>
-    <div style="font-size:12px; font-weight:800; color:#cbd5e1; background:rgba(255,255,255,0.12); padding:5px 12px; border-radius:99px; border:1px solid rgba(255,255,255,0.2);">
-      🔒 100% Privado
+    <div class="badge-privacy">
+      <span>🔒</span> 100% Privado
     </div>
   </header>
 
@@ -456,25 +514,22 @@
   <div id="modalShareIa" class="modal-foto hide">
     <div class="modal-content" style="max-width:440px; text-align:center;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 style="margin:0; font-size:17px;">✨ Composición IA Generada</h3>
+        <h3 style="margin:0; font-size:17px;">✨ Composición Fotográfica IA</h3>
         <button type="button" class="btn btn-red" id="btnCerrarModalShare" style="margin:0;">✕</button>
       </div>
       <p style="font-size:13px; color:var(--muted); margin:0 0 10px 0;">
-        Tarjeta HD con tu foto, tus métricas del día y el enlace a la app:
+        Tarjeta vertical a pantalla completa lista para enviar:
       </p>
-      <img id="imgComposicionPreview" src="" alt="Composición IA" style="width:100%; max-height:48vh; border-radius:14px; object-fit:contain; border:2px solid #334155; margin-bottom:10px; background:#0f172a;">
-      <div id="txtComentarioIaPreview" style="font-size:13px; font-weight:700; color:var(--indigo); background:#e0e7ff; padding:10px; border-radius:12px; margin-bottom:12px; text-align:left;"></div>
+      <img id="imgComposicionPreview" src="" alt="Composición IA" style="width:100%; max-height:50vh; border-radius:14px; object-fit:contain; border:2px solid #334155; margin-bottom:10px; background:#0f172a; box-shadow:0 8px 20px rgba(0,0,0,0.3);">
+      <div id="txtComentarioIaPreview" style="font-size:13px; font-weight:800; color:var(--indigo); background:#e0e7ff; padding:10px; border-radius:12px; margin-bottom:12px; text-align:left; border:1px solid #c7d2fe;"></div>
       <div class="grid2">
         <button type="button" class="btn btn-share-ai" id="btnAccionCompartirNativo" style="margin:0;">
-          📲 Compartir (IG/WhatsApp)
+          📲 Enviar Foto (WhatsApp/IG)
         </button>
         <button type="button" class="btn btn-blue" id="btnDescargarComposicion" style="margin:0;">
-          💾 Descargar Foto
+          💾 Guardar en Galería
         </button>
       </div>
-      <button type="button" class="btn btn-outline" id="btnCopiarTextoShare" style="margin-top:8px; font-size:13px; padding:9px;">
-        📋 Copiar Resumen de Texto
-      </button>
     </div>
   </div>
 
@@ -492,15 +547,15 @@
           <input type="date" id="selectorFecha" style="padding:11px 12px; font-weight:800;">
         </div>
         <div>
-          <!-- REQUISITO 2: BOTÓN COMPARTIR CON FUNCIÓN IA PREMIUM -->
+          <!-- BOTÓN COMPARTIR CON FUNCIÓN IA PREMIUM -->
           <button type="button" class="btn btn-share-ai" id="btnCompartirIaPremium" style="margin-top:24px; padding:12px 10px; font-size:13px;">
-            ✨ Compartir con IA PRO
+            ✨ Compartir (IA Premium)
           </button>
         </div>
       </div>
 
       <div id="estadoGenerandoShare" class="hide" style="margin-top:10px; font-size:13px; color:var(--indigo); font-weight:800; text-align:center; background:#e0e7ff; padding:10px; border-radius:12px; border:1.5px solid #818cf8;">
-        ⏳ Gemini 3.8 Flash generando composición fotográfica inteligente...
+        ⏳ Gemini 3.8 Flash generando composición vertical a pantalla completa...
       </div>
 
       <!-- LLAMADA DIRECTA AL ANALIZADOR DE IA (PROMOCIÓN PRO) -->
@@ -516,7 +571,7 @@
         </button>
       </div>
 
-      <!-- PESO DECIMAL Y GRASA CORPORAL CON ENTRADAS MUY MARCADAS -->
+      <!-- PESO DECIMAL Y GRASA CORPORAL -->
       <div style="margin-top:14px; padding-top:12px; border-top:2px solid var(--border-light);" class="grid2">
         <div>
           <label>⚖️ Peso de hoy (kg):</label>
@@ -528,7 +583,7 @@
         </div>
       </div>
 
-      <!-- FOTO CORPORAL DEL DÍA CON CÁMARA O GALERÍA -->
+      <!-- FOTO CORPORAL DEL DÍA CON CÁMARA O GALERÍA (BOTONES DISTINTIVOS CON FONDO DE COLOR) -->
       <div style="margin-top:14px; padding-top:12px; border-top:2px solid var(--border-light);">
         <label>📸 Foto corporal del día (Progreso):</label>
         <div class="grid2" style="margin-top:6px;">
@@ -637,7 +692,7 @@
         <button type="button" class="chip-cat" data-cat="Grasas/Supl">🥜 Frutos/Supl.</button>
       </div>
 
-      <!-- SELECTOR: MODO DE MEDIDA CON BORDES MUY MARCADOS -->
+      <!-- SELECTOR: MODO DE MEDIDA (CHIPS CON COLOR DIFERENCIADO DEL BLANCO) -->
       <div style="margin-top:8px; background:#f1f5f9; padding:12px; border-radius:14px; border:2px solid var(--border-field);">
         <label style="margin:0 0 6px 0; font-size:12px; color:var(--indigo); font-weight:900;">⚖️ MODO DE MEDIDA:</label>
         <div style="display:flex; gap:8px;">
@@ -711,7 +766,7 @@
       <div style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-top:8px; font-size:13px; line-height:1.6; border:1px solid rgba(255,255,255,0.12);">
         <div style="display:flex; align-items:center; gap:8px;">✅ <b>Análisis multimodal con Gemini 3.8 Flash</b> (Foto + Texto).</div>
         <div style="display:flex; align-items:center; gap:8px;">✅ <b>Cálculo inteligente del peso real</b> de la ración en gramos.</div>
-        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Composiciones visuales HD con IA</b> para compartir en Instagram/WhatsApp.</div>
+        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Composiciones HD con IA</b> para compartir en Instagram/WhatsApp.</div>
         <div style="display:flex; align-items:center; gap:8px;">✅ <b>Sin anuncios</b> y con almacenamiento 100% privado en tu móvil.</div>
       </div>
 
@@ -851,7 +906,7 @@
 
   <!-- PIE DE PÁGINA CON ENLACES LEGALES Y PRIVACIDAD -->
   <footer class="app-footer">
-    <div><strong>Nutrievolution V4</strong> · Tu diario nutricional inteligente</div>
+    <div><strong>Nutrievolution</strong> · Tu diario nutricional inteligente</div>
     <div style="margin-top:8px;">
       <a href="/privacy.html" target="_blank">🔒 Política de Privacidad</a> |
       <a href="#" id="linkTerminos">📜 Términos y Condiciones</a> |
@@ -876,8 +931,8 @@
     </button>
   </nav>
 
-  <!-- CANVAS OCULTO PARA COMPOSICIÓN GRÁFICA HD (1080 x 1350) -->
-  <canvas id="canvasShareHidden" width="1080" height="1350"></canvas>
+  <!-- CANVAS OCULTO PARA COMPOSICIÓN GRÁFICA FULL SCREEN 9:16 (1080 x 1920) -->
+  <canvas id="canvasShareHidden" width="1080" height="1920"></canvas>
 
   <script>
     // =========================================================================
@@ -978,12 +1033,12 @@
     var MODELO_DEFAULT = 'gemini-3.8-flash';
     var APP_URL_PROMO = 'https://nutrievolution-ten.vercel.app/';
 
-    var baseDatosDiaria = JSON.parse(localStorage.getItem('nutrievo_diario_v4')) ||
-                          JSON.parse(localStorage.getItem('nutrievo_diario_v3')) ||
-                          JSON.parse(localStorage.getItem('ms_diario_pro_v6')) || {};
+    var baseDatosDiaria = JSON.parse(localStorage.getItem('nutrievo_diario_v5')) ||
+                          JSON.parse(localStorage.getItem('nutrievo_diario_v4')) ||
+                          JSON.parse(localStorage.getItem('nutrievo_diario_v3')) || {};
 
-    var favoritosGuardados = JSON.parse(localStorage.getItem('nutrievo_favoritos_v4')) ||
-                             JSON.parse(localStorage.getItem('nutrievo_favoritos_v3')) || [
+    var favoritosGuardados = JSON.parse(localStorage.getItem('nutrievo_favoritos_v5')) ||
+                             JSON.parse(localStorage.getItem('nutrievo_favoritos_v4')) || [
       { n: 'Manzana fresca', cat: 'Frutas', k: 52, p: 0.3, c: 13.8, f: 0.2, unNom: '1 pieza mediana (180g)', pesoUn: 180 },
       { n: 'Pechuga de pollo fresca', cat: 'Carnes', k: 110, p: 23.0, c: 0.0, f: 1.5, unNom: '1 filete mediano (150g)', pesoUn: 150 },
       { n: 'Huevo entero talla M/L', cat: 'Huevos/Lácteos', k: 143, p: 12.6, c: 0.7, f: 9.5, unNom: '1 huevo (60g)', pesoUn: 60 },
@@ -991,8 +1046,8 @@
       { n: 'Proteína Whey en polvo', cat: 'Grasas/Supl', k: 385, p: 78.0, c: 6.0, f: 5.5, unNom: '1 cazo dosificador (30g)', pesoUn: 30 }
     ];
 
-    var metasCustom = JSON.parse(localStorage.getItem('nutrievo_metas_v4')) ||
-                      JSON.parse(localStorage.getItem('nutrievo_metas_v3')) ||
+    var metasCustom = JSON.parse(localStorage.getItem('nutrievo_metas_v5')) ||
+                      JSON.parse(localStorage.getItem('nutrievo_metas_v4')) ||
                       { k: 2150, p: 165, c: 190, f: 65, autoPeso: true };
 
     var apiKeyActual = localStorage.getItem('nutrievo_api_key') || API_KEY_DEFAULT;
@@ -1009,7 +1064,6 @@
     var macroBase100g = { p: 0, c: 0, f: 0, k: 0 };
 
     var ultimaComposicionBlob = null;
-    var ultimoTextoShare = '';
 
     var hoyStr = new Date().toISOString().split('T')[0];
     var selectorFecha = document.getElementById('selectorFecha');
@@ -1182,7 +1236,7 @@
       var pesoHoy = parsearDecimal(baseDatosDiaria[fKey].peso) || 73.0;
       var calc = calcularMetasDefinicionPorPeso(pesoHoy);
       metasCustom = { k: calc.k, p: calc.p, c: calc.c, f: calc.f, autoPeso: true };
-      localStorage.setItem('nutrievo_metas_v4', JSON.stringify(metasCustom));
+      localStorage.setItem('nutrievo_metas_v5', JSON.stringify(metasCustom));
       document.getElementById('editMetaKcal').value = metasCustom.k;
       document.getElementById('editMetaProt').value = metasCustom.p;
       document.getElementById('editMetaCarb').value = metasCustom.c;
@@ -1198,7 +1252,7 @@
         f: parseInt(document.getElementById('editMetaGrasa').value) || 65,
         autoPeso: false
       };
-      localStorage.setItem('nutrievo_metas_v4', JSON.stringify(metasCustom));
+      localStorage.setItem('nutrievo_metas_v5', JSON.stringify(metasCustom));
       document.getElementById('panelEditarMetas').className = 'hide';
       actualizarVista();
     });
@@ -1216,7 +1270,7 @@
     function procesarFotoCorporal(e) {
       var file = e.target.files[0];
       if (!file) return;
-      comprimirImagen(file, 800, function(b64) {
+      comprimirImagen(file, 900, function(b64) {
         var fKey = obtenerFecha();
         asegurarDia(fKey);
         baseDatosDiaria[fKey].fotoCuerpo = b64;
@@ -1244,7 +1298,7 @@
           if (w > maxW) { h = Math.round(h * (maxW / w)); w = maxW; }
           canvas.width = w; canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          cb(canvas.toDataURL('image/jpeg', 0.85));
+          cb(canvas.toDataURL('image/jpeg', 0.88));
         };
         img.src = ev.target.result;
       };
@@ -1252,7 +1306,7 @@
     }
 
     // =========================================================================
-    // 7. REQUISITO 2: GENERACIÓN DE COMPOSICIÓN IA PREMIUM (CANVAS HD + GEMINI FLASH 3.8)
+    // 7. COMPOSICIÓN IA EN VERTICAL PANTALLA COMPLETA 9:16 (1080 x 1920) SIN BANDAS NEGRAS
     // =========================================================================
     document.getElementById('btnCompartirIaPremium').addEventListener('click', async function() {
       var fKey = obtenerFecha();
@@ -1274,17 +1328,17 @@
         sf += diaObj.alimentos[i].f;
       }
 
-      var pesoStr = diaObj.peso ? diaObj.peso + ' kg' : 'No registrado';
-      var grasaStr = diaObj.grasa ? diaObj.grasa + '%' : 'No registrado';
+      var pesoStr = diaObj.peso ? diaObj.peso + ' kg' : 'En seguimiento';
+      var grasaStr = diaObj.grasa ? diaObj.grasa + '%' : 'En seguimiento';
 
-      // 1. Llamar a Gemini Flash 3.8 para generar titular y valoración nutricional experta
-      var fraseIa = '¡Día impecable! Gran aporte de proteína y adherencia al objetivo.';
+      // 1. Llamada a Gemini Flash 3.8 para obtener una frase motivadora potente
+      var fraseIa = '¡Objetivo superado! Disciplina y nutrición de alto nivel.';
       try {
-        var promptComposicion = 'Eres un entrenador y nutricionista de élite. Analiza este resumen diario: ' +
-          'Fecha: ' + fKey + ', Calorías consumidas: ' + Math.round(sk) + ' de ' + metasCustom.k + ' kcal meta. ' +
-          'Proteínas: ' + Math.round(sp) + 'g de ' + metasCustom.p + 'g meta. Carbohidratos: ' + Math.round(sc) + 'g. Grasas: ' + Math.round(sf) + 'g. ' +
+        var promptComposicion = 'Eres un entrenador y nutricionista de alto rendimiento. Analiza este día: ' +
+          'Fecha: ' + fKey + ', Calorías: ' + Math.round(sk) + '/' + metasCustom.k + ' kcal. ' +
+          'Proteínas: ' + Math.round(sp) + '/' + metasCustom.p + 'g. Carbos: ' + Math.round(sc) + 'g. Grasas: ' + Math.round(sf) + 'g. ' +
           'Peso: ' + pesoStr + ', Grasa: ' + grasaStr + '. ' +
-          'Genera una frase motivadora, concisa (máximo 12 palabras), con emojis y potente para una historia de Instagram. Devuelve SOLO esa frase sin comillas.';
+          'Genera una frase motivadora, enérgica, de máximo 10 palabras con emojis para publicar en Stories. Devuelve SOLO esa frase sin comillas.';
 
         var resIa = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + modeloActual + ':generateContent?key=' + apiKeyActual, {
           method: 'POST',
@@ -1301,37 +1355,47 @@
         console.warn('Usando frase motivadora local para composición:', err);
       }
 
-      // 2. Renderizar composición en Canvas HD (1080 x 1350 vertical estilo Story/Post)
+      // 2. Renderizado en Canvas HD Vertical 9:16 (1080 x 1920) para llenar la pantalla por completo
       var canvas = document.getElementById('canvasShareHidden');
       var ctx = canvas.getContext('2d');
       var W = 1080;
-      var H = 1350;
+      var H = 1920;
+      canvas.width = W;
+      canvas.height = H;
 
-      // Fondo base gradiente oscuro elegante
+      // Fondo base gradiente estilizado oscuro sin bandas negras
       var bgGrad = ctx.createLinearGradient(0, 0, 0, H);
       bgGrad.addColorStop(0, '#090d16');
-      bgGrad.addColorStop(0.5, '#0f172a');
-      bgGrad.addColorStop(1, '#1e1b4b');
+      bgGrad.addColorStop(0.3, '#0f172a');
+      bgGrad.addColorStop(0.7, '#1e1b4b');
+      bgGrad.addColorStop(1, '#090d16');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
-      // Si hay foto corporal, integrarla con recorte elegante y gradiente
+      // Si existe foto corporal, se dibuja EN VERTICAL ocupando un marco imponente y armonioso
       if (diaObj.fotoCuerpo) {
         await new Promise(function(resolve) {
           var imgFoto = new Image();
           imgFoto.onload = function() {
-            var fotoH = 500;
-            var fotoY = 170;
-            var fotoW = W - 100;
-            var fotoX = 50;
+            // Marco vertical 3:4 / 9:14 centrado en pantalla
+            var fotoW = 960;
+            var fotoH = 920; // Proporción vertical imponente
+            var fotoX = 60;
+            var fotoY = 220;
 
+            // Primero un fondo difuminado de la misma foto para evitar cualquier banda vacía
             ctx.save();
-            // Borde redondeado para la foto
+            ctx.filter = 'blur(30px) brightness(0.4)';
+            ctx.drawImage(imgFoto, 0, 150, W, 1050);
+            ctx.restore();
+
+            // Dibujar la foto en vertical nítida con esquinas redondeadas
+            ctx.save();
             ctx.beginPath();
-            ctx.roundRect(fotoX, fotoY, fotoW, fotoH, 24);
+            ctx.roundRect(fotoX, fotoY, fotoW, fotoH, 28);
             ctx.clip();
 
-            // Dibujar imagen manteniendo proporción cover
+            // Dibujo con cobertura proporcional (sin distorsión)
             var rSrc = imgFoto.width / imgFoto.height;
             var rDst = fotoW / fotoH;
             var sW, sH, sX, sY;
@@ -1348,20 +1412,20 @@
             }
             ctx.drawImage(imgFoto, sX, sY, sW, sH, fotoX, fotoY, fotoW, fotoH);
 
-            // Gradiente viñeta oscuro inferior sobre la foto
-            var gradOverlay = ctx.createLinearGradient(0, fotoY + fotoH - 140, 0, fotoY + fotoH);
+            // Viñeta oscura suave en el borde inferior de la foto
+            var gradOverlay = ctx.createLinearGradient(0, fotoY + fotoH - 220, 0, fotoY + fotoH);
             gradOverlay.addColorStop(0, 'rgba(15, 23, 42, 0)');
-            gradOverlay.addColorStop(1, 'rgba(15, 23, 42, 0.9)');
+            gradOverlay.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
             ctx.fillStyle = gradOverlay;
             ctx.fillRect(fotoX, fotoY, fotoW, fotoH);
 
             ctx.restore();
 
-            // Borde brillante
+            // Borde brillante de cristal
             ctx.strokeStyle = '#4338ca';
             ctx.lineWidth = 6;
             ctx.beginPath();
-            ctx.roundRect(fotoX, fotoY, fotoW, fotoH, 24);
+            ctx.roundRect(fotoX, fotoY, fotoW, fotoH, 28);
             ctx.stroke();
 
             resolve();
@@ -1370,43 +1434,52 @@
         });
       }
 
-      // Cabecera de la composición
+      // --- Cabecera de la composición (1080 x 1920) ---
+      // Logo e icono
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.roundRect(60, 70, 72, 72, 18);
+      ctx.fill();
+
       ctx.fillStyle = '#ffffff';
-      ctx.font = '900 48px Inter, system-ui, sans-serif';
+      ctx.font = '900 42px Plus Jakarta Sans, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🥗', 96, 122);
+
       ctx.textAlign = 'left';
-      ctx.fillText('🥗 NUTRIEVOLUTION', 60, 95);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 50px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('NUTRIEVOLUTION', 150, 115);
 
       ctx.fillStyle = '#10b981';
-      ctx.font = '800 24px Inter, system-ui, sans-serif';
-      ctx.fillText('DIARIO NUTRICIONAL CON IA', 60, 135);
+      ctx.font = '800 22px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('DIARIO NUTRICIONAL INTELIGENTE', 154, 148);
 
       ctx.textAlign = 'right';
       ctx.fillStyle = '#94a3b8';
-      ctx.font = '800 28px Inter, system-ui, sans-serif';
-      ctx.fillText('📅 ' + fKey, W - 60, 105);
+      ctx.font = '800 28px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('📅 ' + fKey, W - 60, 120);
 
-      // Frase motivacional destacada de Gemini
-      var baseYTexto = diaObj.fotoCuerpo ? 720 : 250;
+      // --- Frase motivadora IA destacada ---
+      var baseYFrase = diaObj.fotoCuerpo ? 1170 : 380;
       ctx.fillStyle = '#e0e7ff';
       ctx.beginPath();
-      ctx.roundRect(50, baseYTexto, W - 100, 100, 18);
+      ctx.roundRect(60, baseYFrase, W - 120, 110, 22);
       ctx.fill();
       ctx.strokeStyle = '#818cf8';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 3.5;
       ctx.stroke();
 
       ctx.textAlign = 'center';
       ctx.fillStyle = '#1e1b4b';
-      ctx.font = '900 30px Inter, system-ui, sans-serif';
-      ctx.fillText(fraseIa, W / 2, baseYTexto + 60);
+      ctx.font = '900 34px Plus Jakarta Sans, sans-serif';
+      ctx.fillText(fraseIa, W / 2, baseYFrase + 68);
 
-      // Bloque de Métricas y Calorías
-      var yStats = baseYTexto + 130;
-
-      // Caja de Calorías
+      // --- Tarjeta de Calorías y Meta ---
+      var yStats = baseYFrase + 140;
       ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.beginPath();
-      ctx.roundRect(50, yStats, W - 100, 130, 20);
+      ctx.roundRect(60, yStats, W - 120, 145, 24);
       ctx.fill();
       ctx.strokeStyle = '#334155';
       ctx.lineWidth = 3;
@@ -1414,131 +1487,120 @@
 
       ctx.textAlign = 'left';
       ctx.fillStyle = '#94a3b8';
-      ctx.font = '800 24px Inter, system-ui, sans-serif';
-      ctx.fillText('ENERGÍA CONSUMIDA', 90, yStats + 50);
+      ctx.font = '800 26px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('CALORÍAS TOTALES CONSUMIDAS', 100, yStats + 55);
 
       ctx.fillStyle = '#10b981';
-      ctx.font = '900 52px Inter, system-ui, sans-serif';
-      ctx.fillText(Math.round(sk) + ' kcal', 90, yStats + 105);
+      ctx.font = '900 62px Plus Jakarta Sans, sans-serif';
+      ctx.fillText(Math.round(sk) + ' kcal', 100, yStats + 120);
 
       ctx.textAlign = 'right';
       ctx.fillStyle = '#cbd5e1';
-      ctx.font = '800 28px Inter, system-ui, sans-serif';
-      ctx.fillText('Objetivo: ' + metasCustom.k + ' kcal', W - 90, yStats + 80);
+      ctx.font = '800 30px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('Meta: ' + metasCustom.k + ' kcal', W - 100, yStats + 95);
 
-      // 3 Cajas de Macronutrientes
-      var yMacros = yStats + 155;
-      var anchoCard = (W - 100 - 32) / 3;
+      // --- 3 Tarjetas de Macronutrientes en paralelo ---
+      var yMacros = yStats + 175;
+      var anchoCard = (W - 120 - 32) / 3;
 
       // Proteínas
       ctx.fillStyle = '#1e293b';
-      ctx.beginPath(); ctx.roundRect(50, yMacros, anchoCard, 115, 16); ctx.fill();
-      ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.beginPath(); ctx.roundRect(60, yMacros, anchoCard, 135, 18); ctx.fill();
+      ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 4.5; ctx.stroke();
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#60a5fa'; ctx.font = '800 20px Inter, sans-serif'; ctx.fillText('PROTEÍNAS', 50 + anchoCard/2, yMacros + 38);
-      ctx.fillStyle = '#ffffff'; ctx.font = '900 42px Inter, sans-serif'; ctx.fillText(Math.round(sp) + 'g', 50 + anchoCard/2, yMacros + 90);
+      ctx.fillStyle = '#60a5fa'; ctx.font = '800 22px Plus Jakarta Sans, sans-serif'; ctx.fillText('PROTEÍNAS', 60 + anchoCard/2, yMacros + 44);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 48px Plus Jakarta Sans, sans-serif'; ctx.fillText(Math.round(sp) + 'g', 60 + anchoCard/2, yMacros + 104);
 
       // Carbohidratos
       ctx.fillStyle = '#1e293b';
-      ctx.beginPath(); ctx.roundRect(50 + anchoCard + 16, yMacros, anchoCard, 115, 16); ctx.fill();
-      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4; ctx.stroke();
-      ctx.fillStyle = '#fbbf24'; ctx.font = '800 20px Inter, sans-serif'; ctx.fillText('CARBOS', 50 + anchoCard + 16 + anchoCard/2, yMacros + 38);
-      ctx.fillStyle = '#ffffff'; ctx.font = '900 42px Inter, sans-serif'; ctx.fillText(Math.round(sc) + 'g', 50 + anchoCard + 16 + anchoCard/2, yMacros + 90);
+      ctx.beginPath(); ctx.roundRect(60 + anchoCard + 16, yMacros, anchoCard, 135, 18); ctx.fill();
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4.5; ctx.stroke();
+      ctx.fillStyle = '#fbbf24'; ctx.font = '800 22px Plus Jakarta Sans, sans-serif'; ctx.fillText('CARBOS', 60 + anchoCard + 16 + anchoCard/2, yMacros + 44);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 48px Plus Jakarta Sans, sans-serif'; ctx.fillText(Math.round(sc) + 'g', 60 + anchoCard + 16 + anchoCard/2, yMacros + 104);
 
       // Grasas
       ctx.fillStyle = '#1e293b';
-      ctx.beginPath(); ctx.roundRect(50 + (anchoCard*2) + 32, yMacros, anchoCard, 115, 16); ctx.fill();
-      ctx.strokeStyle = '#e11d48'; ctx.lineWidth = 4; ctx.stroke();
-      ctx.fillStyle = '#f87171'; ctx.font = '800 20px Inter, sans-serif'; ctx.fillText('GRASAS', 50 + (anchoCard*2) + 32 + anchoCard/2, yMacros + 38);
-      ctx.fillStyle = '#ffffff'; ctx.font = '900 42px Inter, sans-serif'; ctx.fillText(Math.round(sf) + 'g', 50 + (anchoCard*2) + 32 + anchoCard/2, yMacros + 90);
+      ctx.beginPath(); ctx.roundRect(60 + (anchoCard*2) + 32, yMacros, anchoCard, 135, 18); ctx.fill();
+      ctx.strokeStyle = '#e11d48'; ctx.lineWidth = 4.5; ctx.stroke();
+      ctx.fillStyle = '#f87171'; ctx.font = '800 22px Plus Jakarta Sans, sans-serif'; ctx.fillText('GRASAS', 60 + (anchoCard*2) + 32 + anchoCard/2, yMacros + 44);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 48px Plus Jakarta Sans, sans-serif'; ctx.fillText(Math.round(sf) + 'g', 60 + (anchoCard*2) + 32 + anchoCard/2, yMacros + 104);
 
-      // Bloque Peso y Grasa
-      var yBio = yMacros + 140;
+      // --- Bloque Peso y % Grasa Corporal ---
+      var yBio = yMacros + 165;
       ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.beginPath(); ctx.roundRect(50, yBio, W - 100, 80, 16); ctx.fill();
-      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); ctx.roundRect(60, yBio, W - 120, 95, 18); ctx.fill();
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2.5; ctx.stroke();
 
       ctx.textAlign = 'left';
-      ctx.fillStyle = '#cbd5e1';
-      ctx.font = '800 26px Inter, sans-serif';
-      ctx.fillText('⚖️ Peso: ' + pesoStr, 90, yBio + 50);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '800 30px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('⚖️ Peso: ' + pesoStr, 100, yBio + 58);
 
       ctx.textAlign = 'right';
-      ctx.fillText('💧 % Grasa: ' + grasaStr, W - 90, yBio + 50);
+      ctx.fillText('💧 % Grasa: ' + grasaStr, W - 100, yBio + 58);
 
-      // REQUISITO 2: FOOTER CON ENLACE VISIBLE A LA APLICACIÓN
-      var yFooter = H - 120;
-      var gradBannerApp = ctx.createLinearGradient(50, yFooter, W - 50, yFooter);
+      // --- Banner Inferior con enlace llamativo a la app ---
+      var yFooter = H - 130;
+      var gradBannerApp = ctx.createLinearGradient(60, yFooter, W - 60, yFooter);
       gradBannerApp.addColorStop(0, '#4338ca');
       gradBannerApp.addColorStop(0.5, '#7c3aed');
       gradBannerApp.addColorStop(1, '#db2777');
       ctx.fillStyle = gradBannerApp;
       ctx.beginPath();
-      ctx.roundRect(50, yFooter, W - 100, 85, 20);
+      ctx.roundRect(60, yFooter, W - 120, 90, 22);
       ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
       ctx.textAlign = 'center';
       ctx.fillStyle = '#ffffff';
-      ctx.font = '900 28px Inter, sans-serif';
-      ctx.fillText('📲 Pruébala gratis en: ' + APP_URL_PROMO, W / 2, yFooter + 52);
+      ctx.font = '900 30px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('📲 Pruébala gratis en: ' + APP_URL_PROMO, W / 2, yFooter + 55);
 
-      // 3. Exportar composición a imagen Blob / DataURL
+      // 3. Conversión a Blob y apertura del modal
       canvas.toBlob(function(blob) {
         ultimaComposicionBlob = blob;
         var urlComp = URL.createObjectURL(blob);
         document.getElementById('imgComposicionPreview').src = urlComp;
         document.getElementById('txtComentarioIaPreview').textContent = '🤖 Valoración Gemini: "' + fraseIa + '"';
 
-        // Preparar texto para portapapeles / compartir
-        ultimoTextoShare = '🥗 MI DIARIO NUTRIEVOLUTION (' + fKey + ')\n' +
-          '🔥 Calorías: ' + Math.round(sk) + ' / ' + metasCustom.k + ' kcal\n' +
-          '💪 Proteínas: ' + Math.round(sp) + 'g | 🌾 Carbos: ' + Math.round(sc) + 'g | 🥑 Grasas: ' + Math.round(sf) + 'g\n' +
-          (diaObj.peso ? '⚖️ Peso: ' + diaObj.peso + ' kg\n' : '') +
-          (diaObj.grasa ? '💧 % Grasa: ' + diaObj.grasa + '%\n' : '') +
-          '✨ ' + fraseIa + '\n\n' +
-          '👉 Entra y pruébala gratis aquí: ' + APP_URL_PROMO;
-
         bannerEstado.className = 'hide';
         document.getElementById('modalShareIa').className = 'modal-foto';
-      }, 'image/jpeg', 0.92);
+      }, 'image/jpeg', 0.94);
     });
 
-    // Acciones del modal Share IA
+    // REQUISITO 3: COMPARTIR DIRECTAMENTE SOLO LA COMPOSICIÓN (SIN TEXTO ADJUNTO)
     document.getElementById('btnAccionCompartirNativo').addEventListener('click', async function() {
       if (!ultimaComposicionBlob) return;
 
+      var fKey = obtenerFecha();
+      var file = new File([ultimaComposicionBlob], 'nutrievolution_' + fKey + '.jpg', { type: 'image/jpeg' });
+
       if (navigator.share) {
         try {
-          var fKey = obtenerFecha();
-          var file = new File([ultimaComposicionBlob], 'nutrievolution_' + fKey + '.jpg', { type: 'image/jpeg' });
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            // SOLO LA COMPOSICIÓN FOTOGRÁFICA (SIN TEXTO)
             await navigator.share({
-              title: 'Nutrievolution - Diario Nutricional',
-              text: ultimoTextoShare,
               files: [file]
             });
             return;
           }
-          await navigator.share({
-            title: 'Nutrievolution - Diario Nutricional',
-            text: ultimoTextoShare,
-            url: APP_URL_PROMO
-          });
-          return;
         } catch (err) {
-          // Si cancela o falla, continuamos a abrir instagram
+          // El usuario canceló o el navegador requiere fallback
         }
       }
 
-      // Fallback
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(ultimoTextoShare);
-      }
-      alert('📋 ¡Resumen y enlace copiados al portapapeles!\n\nAbriendo Instagram para que publiques tu composición.');
+      // Si no soporta compartir archivo directo, descargar automáticamente y abrir WhatsApp / Instagram
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(ultimaComposicionBlob);
+      a.download = 'Nutrievolution_' + fKey + '.jpg';
+      a.click();
+      alert('💾 ¡Foto guardada en tu galería!\n\nAbriendo Instagram/WhatsApp para que puedas publicarla directamente.');
       window.location.href = 'instagram://app';
       setTimeout(function() {
-        window.open('https://www.instagram.com/', '_blank');
-      }, 1000);
+        window.open('https://api.whatsapp.com/', '_blank');
+      }, 1200);
     });
 
     document.getElementById('btnDescargarComposicion').addEventListener('click', function() {
@@ -1547,16 +1609,6 @@
       a.href = URL.createObjectURL(ultimaComposicionBlob);
       a.download = 'Nutrievolution_' + obtenerFecha() + '.jpg';
       a.click();
-    });
-
-    document.getElementById('btnCopiarTextoShare').addEventListener('click', async function() {
-      if (!ultimoTextoShare) return;
-      try {
-        await navigator.clipboard.writeText(ultimoTextoShare);
-        alert('✅ Texto copiado al portapapeles listo para pegar en WhatsApp o Instagram.');
-      } catch (err) {
-        alert('No se pudo copiar automáticamente. Puedes compartir la imagen directamente.');
-      }
     });
 
     // =========================================================================
@@ -1626,7 +1678,7 @@
           pesoUn: itemObj.pesoUn || 100
         });
       }
-      localStorage.setItem('nutrievo_favoritos_v4', JSON.stringify(favoritosGuardados));
+      localStorage.setItem('nutrievo_favoritos_v5', JSON.stringify(favoritosGuardados));
       dibujarBaseDatos();
       actualizarVista();
     }
@@ -1840,7 +1892,7 @@
     function procesarFotoPlato(e) {
       var file = e.target.files[0];
       if (!file) return;
-      comprimirImagen(file, 600, function(b64) {
+      comprimirImagen(file, 650, function(b64) {
         fotoPlatoBase64 = b64;
         var img = document.getElementById('previewFotoPlato');
         img.src = fotoPlatoBase64;
@@ -2030,7 +2082,7 @@
     });
 
     function guardarYActualizar() {
-      localStorage.setItem('nutrievo_diario_v4', JSON.stringify(baseDatosDiaria));
+      localStorage.setItem('nutrievo_diario_v5', JSON.stringify(baseDatosDiaria));
       actualizarVista();
     }
 
