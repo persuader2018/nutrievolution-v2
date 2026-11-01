@@ -3,31 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Nutrievolution V3 - Diario Nutricional con IA</title>
+  <title>Nutrievolution V4 - Diario Nutricional con IA</title>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0f172a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #cbd5e1; /* Fondo pastel grisáceo más contrastado y oscuro */
+      --bg: #cbd5e1; /* Fondo pastel contrastado */
       --card: #ffffff;
-      --card-subtle: #f1f5f9;
-      --border: #94a3b8; /* Borde con mayor definición */
-      --border-light: #cbd5e1;
+      --card-subtle: #f8fafc;
+      --border-field: #64748b; /* Borde muy marcado para inputs */
+      --border-card: #94a3b8;
+      --border-light: #e2e8f0;
       --text: #0f172a;
-      --muted: #475569; /* Texto secundario más oscuro para legibilidad */
+      --muted: #475569;
       --green: #059669;
       --green-dark: #047857;
       --green-light: #d1fae5;
       --blue: #2563eb;
+      --blue-dark: #1d4ed8;
       --blue-light: #dbeafe;
       --amber: #d97706;
       --amber-light: #fef3c7;
       --rose: #e11d48;
       --rose-light: #ffe4e6;
       --indigo: #4338ca;
+      --indigo-dark: #3730a3;
       --indigo-light: #e0e7ff;
       --purple: #7c3aed;
     }
@@ -52,15 +55,15 @@
       padding: 16px 18px;
       border-radius: 18px;
       margin-bottom: 14px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .brand-title {
       font-size: 21px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.5px;
       display: flex;
       align-items: center;
@@ -68,80 +71,80 @@
       cursor: pointer;
       user-select: none;
     }
-    .badge-v3 {
+    .badge-v4 {
       background: #10b981;
       color: #ffffff;
       font-size: 11px;
-      font-weight: 800;
-      padding: 2px 8px;
+      font-weight: 900;
+      padding: 3px 8px;
       border-radius: 99px;
       letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
     }
 
+    /* Tarjetas con sombras y bordes marcados */
     .card {
       background: var(--card);
       padding: 18px;
       border-radius: 18px;
       margin-bottom: 15px;
-      border: 1.5px solid var(--border-light);
-      box-shadow: 0 5px 15px rgba(15, 23, 42, 0.06);
+      border: 2px solid var(--border-card);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
     }
     .card-highlight {
-      background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
-      border: 1.5px solid #94a3b8;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 2px solid #64748b;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1);
     }
 
     h3 {
       margin: 0 0 12px 0;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text);
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    h4 {
-      margin: 12px 0 6px 0;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-    }
 
+    /* REQUISITO 1: CAMPOS DE ENTRADA MUY DEFINIDOS, MARCADOS Y CON SOMBRAS */
     input, select, textarea {
       width: 100%;
       padding: 12px 14px;
       margin-top: 5px;
       border-radius: 12px;
-      border: 1.5px solid var(--border);
+      border: 2px solid var(--border-field);
       background: #ffffff;
       color: var(--text);
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       outline: none;
       font-family: inherit;
+      box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.05), 0 2px 4px rgba(15, 23, 42, 0.06);
       transition: all 0.2s ease;
     }
     input:focus, select:focus, textarea:focus {
       border-color: var(--indigo);
-      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
+      box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.2), inset 0 1px 2px rgba(0,0,0,0.05);
       background: #ffffff;
     }
     label {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--muted);
       display: block;
       margin-top: 8px;
     }
 
+    /* REQUISITO 1: BOTONES MUY DEFINIDOS, CON RELIEVE Y SOMBRAS POTENTES */
     .btn {
       background: var(--green);
       color: #ffffff;
-      border: none;
+      border: 2px solid var(--green-dark);
       padding: 13px 16px;
       border-radius: 12px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       width: 100%;
       margin-top: 10px;
       cursor: pointer;
@@ -150,46 +153,77 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 3px 8px rgba(5, 150, 105, 0.25);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35), 0 2px 4px rgba(0,0,0,0.1);
       transition: all 0.15s ease;
     }
-    .btn:active { transform: scale(0.98); }
-    .btn-blue { background: var(--blue); box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25); }
-    .btn-indigo { background: var(--indigo); box-shadow: 0 3px 8px rgba(67, 56, 202, 0.25); }
-    .btn-amber { background: #d97706; color: #ffffff; box-shadow: 0 3px 8px rgba(217, 119, 6, 0.25); }
-    .btn-instagram {
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      color: #ffffff;
-      box-shadow: 0 3px 10px rgba(220, 39, 67, 0.35);
+    .btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
     }
+    .btn-blue {
+      background: var(--blue);
+      border: 2px solid var(--blue-dark);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .btn-indigo {
+      background: var(--indigo);
+      border: 2px solid var(--indigo-dark);
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .btn-amber {
+      background: #d97706;
+      border: 2px solid #b45309;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35), 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* REQUISITO 2: BOTÓN COMPARTIR CON FUNCIÓN IA PREMIUM */
+    .btn-share-ai {
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #db2777 100%);
+      border: 2px solid #312e81;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45), 0 2px 4px rgba(0,0,0,0.12);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
+    .btn-share-ai:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    }
+
     .btn-outline {
       background: #ffffff;
       color: var(--text);
-      border: 1.5px solid var(--border);
-      box-shadow: none;
-      font-weight: 700;
+      border: 2px solid var(--border-field);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      font-weight: 800;
     }
-    .btn-outline:active { background: #e2e8f0; }
+    .btn-outline:active {
+      background: #e2e8f0;
+      transform: translateY(1px);
+    }
     .btn-outline.active {
       background: var(--indigo-light);
       border-color: var(--indigo);
       color: var(--indigo);
+      box-shadow: 0 3px 8px rgba(67, 56, 202, 0.2);
     }
     .btn-red {
       background: #fee2e2;
       color: var(--rose);
-      border: 1px solid #fecaca;
+      border: 2px solid #f87171;
       width: auto;
       padding: 7px 12px;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       margin: 0;
-      box-shadow: none;
+      box-shadow: 0 2px 5px rgba(225, 29, 72, 0.15);
     }
     .btn-star {
       background: transparent;
       border: none;
-      font-size: 22px;
+      font-size: 24px;
       cursor: pointer;
       padding: 4px;
       line-height: 1;
@@ -203,35 +237,45 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 4px;
-      border-bottom: 1.5px solid var(--border-light);
+      padding: 12px 6px;
+      border-bottom: 2px solid var(--border-light);
       font-size: 14px;
       gap: 10px;
     }
     .item:last-child { border-bottom: none; }
-    .thumb { width: 54px; height: 54px; border-radius: 12px; object-fit: cover; border: 1.5px solid var(--border); cursor: pointer; }
+    .thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid var(--border-field);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
     .lista-scroll { max-height: 320px; overflow-y: auto; margin-top: 10px; padding-right: 4px; }
     .hide { display: none !important; }
 
     /* Barra de navegación inferior */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
-      background: rgba(15, 23, 42, 0.97);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      display: grid; grid-template-columns: 1fr 1.1fr 1fr;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(12px);
+      border-top: 2px solid rgba(255, 255, 255, 0.2);
+      display: grid; grid-template-columns: 1fr 1.15fr 1fr;
       padding: 10px 14px 14px 14px; gap: 10px; z-index: 99;
       max-width: 560px; margin: 0 auto;
-      box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
     }
     .nav-btn {
-      background: #1e293b; color: #94a3b8; border: 1px solid #334155;
-      padding: 10px 8px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; text-align: center;
+      background: #1e293b; color: #94a3b8; border: 1.5px solid #475569;
+      padding: 10px 8px; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; text-align: center;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
     }
     .nav-btn.active {
-      background: #10b981; color: #ffffff; border-color: #10b981;
-      box-shadow: 0 3px 12px rgba(16, 185, 129, 0.35);
+      background: #10b981; color: #ffffff; border-color: #059669;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45);
     }
 
     /* Resumen de progreso */
@@ -239,87 +283,98 @@
       background: #ffffff;
       padding: 16px;
       border-radius: 16px;
-      border: 1.5px solid var(--border);
+      border: 2px solid var(--border-field);
       margin-top: 14px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
     }
-    .bar-container { width: 100%; height: 12px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin-top: 6px; }
+    .bar-container { width: 100%; height: 13px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin-top: 6px; border: 1px solid #cbd5e1; }
     .bar-fill { height: 100%; border-radius: 99px; transition: width 0.35s ease; }
     .macro-card {
       background: #f8fafc;
-      border: 1.5px solid var(--border-light);
+      border: 2px solid var(--border-card);
       border-radius: 14px;
       padding: 12px 8px;
       text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
 
-    /* Modal emergente */
+    /* Modales emergentes */
     .modal-foto {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.94);
       z-index: 200;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 18px;
+      padding: 16px;
     }
     .modal-content {
       background: #ffffff;
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 20px;
-      max-height: 85vh;
+      max-height: 90vh;
       overflow-y: auto;
+      border: 2px solid var(--border-field);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
     }
     .modal-foto img {
-      max-width: 100%; max-height: 75vh; border-radius: 14px; object-fit: contain; background: #000;
+      max-width: 100%; max-height: 74vh; border-radius: 14px; object-fit: contain; background: #000;
+      border: 2px solid #475569;
     }
     .chip-cat {
-      font-size: 13px; padding: 7px 12px; border-radius: 99px; border: 1.5px solid var(--border);
-      background: #ffffff; color: var(--text); cursor: pointer; white-space: nowrap; font-weight: 700;
+      font-size: 13px; padding: 8px 13px; border-radius: 99px; border: 2px solid var(--border-field);
+      background: #ffffff; color: var(--text); cursor: pointer; white-space: nowrap; font-weight: 800;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
     }
-    .chip-cat.active { background: var(--text); color: #fff; border-color: var(--text); }
+    .chip-cat.active { background: var(--text); color: #fff; border-color: var(--text); box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25); }
 
     .chip-modo {
-      font-size: 13px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--border);
-      background: #ffffff; color: var(--text); cursor: pointer; font-weight: 700; flex: 1; text-align: center;
+      font-size: 13px; padding: 9px 12px; border-radius: 10px; border: 2px solid var(--border-field);
+      background: #ffffff; color: var(--text); cursor: pointer; font-weight: 800; flex: 1; text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
     }
-    .chip-modo.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+    .chip-modo.active { background: var(--indigo); color: #fff; border-color: var(--indigo-dark); box-shadow: 0 3px 8px rgba(67, 56, 202, 0.3); }
 
     /* Bloques de tomas del día */
     .comida-block {
-      background: #f8fafc;
-      border: 1.5px solid var(--border-light);
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 12px;
+      background: #ffffff;
+      border: 2px solid var(--border-card);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
     }
     .comida-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 15px;
       color: var(--text);
-      border-bottom: 1.5px solid var(--border-light);
-      padding-bottom: 6px;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 8px;
       margin-bottom: 6px;
     }
 
     /* Pie de página con enlaces legales */
     .app-footer {
-      margin-top: 24px;
+      margin-top: 26px;
       padding: 18px 12px;
       text-align: center;
       font-size: 13px;
       color: var(--muted);
-      border-top: 1.5px solid var(--border-light);
+      border-top: 2px solid var(--border-card);
     }
     .app-footer a {
       color: var(--indigo);
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: none;
       margin: 0 6px;
     }
     .app-footer a:hover { text-decoration: underline; }
+
+    /* Contenedor canvas oculto para generación de imagen */
+    #canvasShareHidden { display: none; }
   </style>
 </head>
 <body>
@@ -328,9 +383,9 @@
   <header class="app-header">
     <div class="brand-title" id="logoApp" title="Pulsar 5 veces para Ajustes de Desarrollador">
       <span>🥗 Nutrievolution</span>
-      <span class="badge-v3">V3</span>
+      <span class="badge-v4">V4 PRO</span>
     </div>
-    <div style="font-size:12px; font-weight:700; color:#cbd5e1; background:rgba(255,255,255,0.1); padding:4px 10px; border-radius:99px;">
+    <div style="font-size:12px; font-weight:800; color:#cbd5e1; background:rgba(255,255,255,0.12); padding:5px 12px; border-radius:99px; border:1px solid rgba(255,255,255,0.2);">
       🔒 100% Privado
     </div>
   </header>
@@ -357,7 +412,7 @@
       </p>
       <p><b>¿Cómo funciona el análisis con IA?</b></p>
       <p style="font-size:14px; color:var(--muted);">
-        Al pulsar "Analizar Plato con IA", la descripción o fotografía del plato se procesa de forma segura a través del modelo <b>Gemini Flash 3.8</b> exclusivamente para calcular el peso de la ración y los macronutrientes.
+        Al pulsar "Analizar Plato con IA" o "Compartir con IA Premium", los datos y fotos se procesan de forma segura a través del modelo <b>Gemini Flash 3.8</b> exclusivamente para calcular el peso de la ración, macronutrientes y generar la composición visual.
       </p>
       <button type="button" class="btn btn-blue" id="btnAceptarInfo">Entendido</button>
     </div>
@@ -397,54 +452,84 @@
     </div>
   </div>
 
+  <!-- MODAL PREVIEW DE LA COMPOSICIÓN IA PARA COMPARTIR -->
+  <div id="modalShareIa" class="modal-foto hide">
+    <div class="modal-content" style="max-width:440px; text-align:center;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="margin:0; font-size:17px;">✨ Composición IA Generada</h3>
+        <button type="button" class="btn btn-red" id="btnCerrarModalShare" style="margin:0;">✕</button>
+      </div>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 10px 0;">
+        Tarjeta HD con tu foto, tus métricas del día y el enlace a la app:
+      </p>
+      <img id="imgComposicionPreview" src="" alt="Composición IA" style="width:100%; max-height:48vh; border-radius:14px; object-fit:contain; border:2px solid #334155; margin-bottom:10px; background:#0f172a;">
+      <div id="txtComentarioIaPreview" style="font-size:13px; font-weight:700; color:var(--indigo); background:#e0e7ff; padding:10px; border-radius:12px; margin-bottom:12px; text-align:left;"></div>
+      <div class="grid2">
+        <button type="button" class="btn btn-share-ai" id="btnAccionCompartirNativo" style="margin:0;">
+          📲 Compartir (IG/WhatsApp)
+        </button>
+        <button type="button" class="btn btn-blue" id="btnDescargarComposicion" style="margin:0;">
+          💾 Descargar Foto
+        </button>
+      </div>
+      <button type="button" class="btn btn-outline" id="btnCopiarTextoShare" style="margin-top:8px; font-size:13px; padding:9px;">
+        📋 Copiar Resumen de Texto
+      </button>
+    </div>
+  </div>
+
 
   <!-- ========================================================
        PESTAÑA 1: DIARIO DE HOY
        ======================================================== -->
   <main id="secDiario">
 
-    <!-- CABECERA DE FECHA Y COMPARTIR EN INSTAGRAM -->
+    <!-- CABECERA DE FECHA Y BOTÓN COMPARTIR CON IA PREMIUM -->
     <div class="card card-highlight">
       <div class="grid2" style="align-items: center;">
         <div>
-          <label style="color:var(--indigo); font-size:13px; font-weight:800;">📅 FECHA DEL DIARIO</label>
-          <input type="date" id="selectorFecha" style="padding:10px 12px; font-weight:700;">
+          <label style="color:var(--indigo); font-size:13px; font-weight:900;">📅 FECHA DEL DIARIO</label>
+          <input type="date" id="selectorFecha" style="padding:11px 12px; font-weight:800;">
         </div>
         <div>
-          <button type="button" class="btn btn-instagram" id="btnCompartirInstagram" style="margin-top:24px; padding:11px 12px; font-size:14px;">
-            📸 Compartir en Instagram
+          <!-- REQUISITO 2: BOTÓN COMPARTIR CON FUNCIÓN IA PREMIUM -->
+          <button type="button" class="btn btn-share-ai" id="btnCompartirIaPremium" style="margin-top:24px; padding:12px 10px; font-size:13px;">
+            ✨ Compartir con IA PRO
           </button>
         </div>
       </div>
 
+      <div id="estadoGenerandoShare" class="hide" style="margin-top:10px; font-size:13px; color:var(--indigo); font-weight:800; text-align:center; background:#e0e7ff; padding:10px; border-radius:12px; border:1.5px solid #818cf8;">
+        ⏳ Gemini 3.8 Flash generando composición fotográfica inteligente...
+      </div>
+
       <!-- LLAMADA DIRECTA AL ANALIZADOR DE IA (PROMOCIÓN PRO) -->
-      <div style="margin-top:14px; background:linear-gradient(135deg, #1e1b4b, #312e81); color:#fff; padding:14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 12px rgba(30,27,75,0.2);">
+      <div style="margin-top:14px; background:linear-gradient(135deg, #0f172a, #1e1b4b); color:#fff; padding:14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 6px 14px rgba(15,23,42,0.25); border:1.5px solid #4338ca;">
         <div>
-          <div style="font-weight:800; font-size:14px; display:flex; align-items:center; gap:6px;">
-            ✨ Analizar Plato por IA <span style="background:#10b981; font-size:10px; padding:2px 6px; border-radius:99px;">GRATIS</span>
+          <div style="font-weight:900; font-size:14px; display:flex; align-items:center; gap:6px;">
+            ✨ Analizar Plato por IA <span style="background:#10b981; font-size:10px; padding:2px 7px; border-radius:99px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">GRATIS</span>
           </div>
-          <div style="font-size:12px; color:#c7d2fe; margin-top:2px;">Calcula macros y gramos por foto o descripción</div>
+          <div style="font-size:12px; color:#c7d2fe; margin-top:3px;">Calcula macros y gramos por foto o descripción</div>
         </div>
         <button type="button" class="btn btn-blue" id="btnIrIaDesdeDiario" style="width:auto; margin:0; padding:9px 14px; font-size:13px;">
           Abrir IA →
         </button>
       </div>
 
-      <!-- PESO DECIMAL Y GRASA CORPORAL -->
-      <div style="margin-top:14px; padding-top:12px; border-top:1.5px solid var(--border-light);" class="grid2">
+      <!-- PESO DECIMAL Y GRASA CORPORAL CON ENTRADAS MUY MARCADAS -->
+      <div style="margin-top:14px; padding-top:12px; border-top:2px solid var(--border-light);" class="grid2">
         <div>
           <label>⚖️ Peso de hoy (kg):</label>
-          <!-- inputmode decimal para admitir comas o puntos con precisión -->
-          <input type="text" inputmode="decimal" id="inputPesoDia" placeholder="Ej. 73.5" style="font-weight:bold; font-size:17px; color:var(--indigo);">
+          <input type="text" inputmode="decimal" id="inputPesoDia" placeholder="Ej. 73.5" style="font-weight:900; font-size:18px; color:var(--indigo);">
         </div>
         <div>
           <label>💧 % Grasa corporal:</label>
-          <input type="text" inputmode="decimal" id="inputGrasaDia" placeholder="Ej. 14.5" style="font-weight:bold; font-size:17px; color:#d97706;">
+          <input type="text" inputmode="decimal" id="inputGrasaDia" placeholder="Ej. 14.5" style="font-weight:900; font-size:18px; color:#d97706;">
         </div>
       </div>
 
       <!-- FOTO CORPORAL DEL DÍA CON CÁMARA O GALERÍA -->
-      <div style="margin-top:14px; padding-top:12px; border-top:1.5px solid var(--border-light);">
+      <div style="margin-top:14px; padding-top:12px; border-top:2px solid var(--border-light);">
         <label>📸 Foto corporal del día (Progreso):</label>
         <div class="grid2" style="margin-top:6px;">
           <button type="button" class="btn btn-outline" id="btnCamaraCuerpo">
@@ -454,18 +539,17 @@
             🖼️ Galería / Fotos
           </button>
         </div>
-        <!-- Inputs de cámara y galería -->
         <input type="file" id="inputFotoDiaCamara" accept="image/*" capture="environment" class="hide">
         <input type="file" id="inputFotoDiaGaleria" accept="image/*" class="hide">
       </div>
 
       <!-- Miniatura si existe foto de cuerpo hoy -->
-      <div id="boxFotoCuerpoHoy" class="hide" style="margin-top:12px; background:#f8fafc; padding:10px; border-radius:12px; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
+      <div id="boxFotoCuerpoHoy" class="hide" style="margin-top:12px; background:#f8fafc; padding:12px; border-radius:14px; border:2px solid var(--border-field); display:flex; align-items:center; justify-content:space-between; box-shadow:0 3px 8px rgba(0,0,0,0.05);">
         <div style="display:flex; align-items:center; gap:12px;">
           <img id="thumbCuerpoHoy" src="" class="thumb" title="Toca para ampliar">
           <div>
-            <div style="font-size:14px; font-weight:bold; color:var(--green);">✅ Foto corporal registrada</div>
-            <div style="font-size:12px; color:var(--muted);">Toca la imagen para verla en grande</div>
+            <div style="font-size:14px; font-weight:900; color:var(--green);">✅ Foto corporal registrada</div>
+            <div style="font-size:12px; color:var(--muted);">Toca para ver en grande o compartir con IA</div>
           </div>
         </div>
         <button type="button" class="btn btn-red" id="btnBorrarFotoHoy">🗑️ Borrar</button>
@@ -474,12 +558,11 @@
       <!-- PROGRESO Y METAS -->
       <div class="progress-box">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:15px; font-weight:800; color:var(--text);">🎯 Resumen de Hoy vs. Meta</span>
+          <span style="font-size:15px; font-weight:900; color:var(--text);">🎯 Resumen de Hoy vs. Meta</span>
           <button type="button" class="btn btn-outline" id="btnToggleMetas" style="width:auto; padding:6px 12px; font-size:12px; margin:0;">⚙️ Ajustar Metas</button>
         </div>
 
-        <!-- Panel de edición de metas -->
-        <div id="panelEditarMetas" class="hide" style="margin-top:12px; padding-top:12px; border-top:1.5px solid var(--border-light);">
+        <div id="panelEditarMetas" class="hide" style="margin-top:12px; padding-top:12px; border-top:2px solid var(--border-light);">
           <div style="font-size:13px; color:var(--muted); margin-bottom:8px;">Ajusta tus objetivos diarios fijos o recalculados según tu peso:</div>
           <div class="grid4">
             <div><label>Kcal</label><input type="number" id="editMetaKcal" value="2150"></div>
@@ -494,13 +577,13 @@
         </div>
 
         <!-- Barra de Calorías -->
-        <div style="margin-top:14px; background:#f8fafc; padding:14px; border-radius:14px; border:1.5px solid var(--border-light);">
+        <div style="margin-top:14px; background:#f8fafc; padding:14px; border-radius:14px; border:2px solid var(--border-light);">
           <div style="display:flex; justify-content:space-between; align-items:baseline;">
             <div>
-              <span style="font-size:26px; font-weight:800; color:var(--green);" id="txtKcalConsumidas">0</span>
-              <span style="font-size:15px; color:var(--muted); font-weight:600;"> / <span id="txtKcalMeta">2150</span> kcal</span>
+              <span style="font-size:26px; font-weight:900; color:var(--green);" id="txtKcalConsumidas">0</span>
+              <span style="font-size:15px; color:var(--muted); font-weight:700;"> / <span id="txtKcalMeta">2150</span> kcal</span>
             </div>
-            <span id="txtKcalRestantes" style="font-size:13px; font-weight:700; color:var(--green); background:var(--green-light); padding:4px 10px; border-radius:99px;">Restan 2150 kcal</span>
+            <span id="txtKcalRestantes" style="font-size:13px; font-weight:800; color:var(--green); background:var(--green-light); padding:4px 10px; border-radius:99px; border:1px solid #a7f3d0;">Restan 2150 kcal</span>
           </div>
           <div class="bar-container" style="height:14px; margin-top:8px;">
             <div id="barKcal" class="bar-fill" style="background:linear-gradient(90deg, #10b981, #059669); width:0%;"></div>
@@ -510,30 +593,30 @@
         <!-- Tarjetas de Macros -->
         <div class="grid3" style="margin-top:12px;">
           <div class="macro-card">
-            <div style="font-size:12px; font-weight:800; color:var(--blue);">PROTEÍNAS</div>
-            <div style="font-size:17px; font-weight:800; margin:4px 0;"><span id="txtProtConsumidas">0</span><span style="font-size:12px; color:var(--muted); font-weight:normal;">/<span id="txtProtMeta">165</span>g</span></div>
+            <div style="font-size:12px; font-weight:900; color:var(--blue);">PROTEÍNAS</div>
+            <div style="font-size:17px; font-weight:900; margin:4px 0;"><span id="txtProtConsumidas">0</span><span style="font-size:12px; color:var(--muted); font-weight:normal;">/<span id="txtProtMeta">165</span>g</span></div>
             <div class="bar-container" style="height:8px;"><div id="barProt" class="bar-fill" style="background:var(--blue); width:0%;"></div></div>
-            <div id="pctProt" style="font-size:11px; color:var(--muted); margin-top:4px; font-weight:600;">0%</div>
+            <div id="pctProt" style="font-size:11px; color:var(--muted); margin-top:4px; font-weight:700;">0%</div>
           </div>
 
           <div class="macro-card">
-            <div style="font-size:12px; font-weight:800; color:var(--amber);">CARBOS</div>
-            <div style="font-size:17px; font-weight:800; margin:4px 0;"><span id="txtCarbConsumidos">0</span><span style="font-size:12px; color:var(--muted); font-weight:normal;">/<span id="txtCarbMeta">190</span>g</span></div>
+            <div style="font-size:12px; font-weight:900; color:var(--amber);">CARBOS</div>
+            <div style="font-size:17px; font-weight:900; margin:4px 0;"><span id="txtCarbConsumidos">0</span><span style="font-size:12px; color:var(--muted); font-weight:normal;">/<span id="txtCarbMeta">190</span>g</span></div>
             <div class="bar-container" style="height:8px;"><div id="barCarb" class="bar-fill" style="background:#f59e0b; width:0%;"></div></div>
-            <div id="pctCarb" style="font-size:11px; color:var(--muted); margin-top:4px; font-weight:600;">0%</div>
+            <div id="pctCarb" style="font-size:11px; color:var(--muted); margin-top:4px; font-weight:700;">0%</div>
           </div>
 
           <div class="macro-card">
-            <div style="font-size:12px; font-weight:800; color:var(--rose);">GRASAS</div>
-            <div style="font-size:17px; font-weight:800; margin:4px 0;"><span id="txtGrasaConsumidas">0</span><span style="font-size:12px; color:var(--muted); font-weight:normal;">/<span id="txtGrasaMeta">65</span>g</span></div>
+            <div style="font-size:12px; font-weight:900; color:var(--rose);">GRASAS</div>
+            <div style="font-size:17px; font-weight:900; margin:4px 0;"><span id="txtGrasaConsumidas">0</span><span style="font-size:12px; color:var(--muted); font-weight:normal;">/<span id="txtGrasaMeta">65</span>g</span></div>
             <div class="bar-container" style="height:8px;"><div id="barGrasa" class="bar-fill" style="background:var(--rose); width:0%;"></div></div>
-            <div id="pctGrasa" style="font-size:11px; color:var(--muted); margin-top:4px; font-weight:600;">0%</div>
+            <div id="pctGrasa" style="font-size:11px; color:var(--muted); margin-top:4px; font-weight:700;">0%</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- MÓDULO BASE DE ALIMENTOS Y FAVORITOS (CON SELECTOR DE GRAMOS O UNIDADES/RACIONES) -->
+    <!-- MÓDULO BASE DE ALIMENTOS Y FAVORITOS -->
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h3 style="margin:0;">🍎 Base de Alimentos</h3>
@@ -542,7 +625,6 @@
         </button>
       </div>
 
-      <!-- Filtros por Categoría -->
       <div style="display:flex; gap:6px; overflow-x:auto; padding:10px 0 6px 0;" id="barraCategorias">
         <button type="button" class="chip-cat active" data-cat="Recientes">⚡ Recientes / Frecuentes</button>
         <button type="button" class="chip-cat" data-cat="Todos">Todos</button>
@@ -555,26 +637,26 @@
         <button type="button" class="chip-cat" data-cat="Grasas/Supl">🥜 Frutos/Supl.</button>
       </div>
 
-      <!-- SELECTOR: INTRODUCIR POR GRAMOS O POR UNIDADES / RACIÓN -->
-      <div style="margin-top:8px; background:#f1f5f9; padding:10px; border-radius:12px; border:1.5px solid var(--border-light);">
-        <label style="margin:0 0 6px 0; font-size:12px; color:var(--indigo);">⚖️ MODO DE MEDIDA:</label>
+      <!-- SELECTOR: MODO DE MEDIDA CON BORDES MUY MARCADOS -->
+      <div style="margin-top:8px; background:#f1f5f9; padding:12px; border-radius:14px; border:2px solid var(--border-field);">
+        <label style="margin:0 0 6px 0; font-size:12px; color:var(--indigo); font-weight:900;">⚖️ MODO DE MEDIDA:</label>
         <div style="display:flex; gap:8px;">
           <button type="button" id="modoGramos" class="chip-modo active">Por Gramos (g)</button>
           <button type="button" id="modoUnidades" class="chip-modo">Por Unidades / Ración</button>
         </div>
 
-        <div class="grid2" style="margin-top:8px;">
+        <div class="grid2" style="margin-top:10px;">
           <div id="boxInputGramos">
             <label>Gramos a añadir (g):</label>
-            <input type="number" id="inputGramosBd" value="100" min="1" style="font-weight:bold; color:var(--green); font-size:16px;">
+            <input type="number" id="inputGramosBd" value="100" min="1" style="font-weight:900; color:var(--green); font-size:16px;">
           </div>
           <div id="boxInputUnidades" class="hide">
             <label>Nº de unidades / raciones:</label>
-            <input type="number" id="inputUnidadesBd" value="1" min="0.25" step="0.25" style="font-weight:bold; color:var(--indigo); font-size:16px;">
+            <input type="number" id="inputUnidadesBd" value="1" min="0.25" step="0.25" style="font-weight:900; color:var(--indigo); font-size:16px;">
           </div>
           <div>
             <label>Añadir a la comida:</label>
-            <select id="selectMomentoBd" style="font-weight:700;">
+            <select id="selectMomentoBd" style="font-weight:800;">
               <option value="Desayuno">☕ Desayuno</option>
               <option value="Almuerzo" selected>🍲 Almuerzo</option>
               <option value="Cena">🌙 Cena</option>
@@ -589,7 +671,7 @@
         <input type="text" id="inputBuscarBd" placeholder="Ej. manzana, merluza, solomillo, arroz...">
       </div>
 
-      <button type="button" class="btn btn-amber" id="btnOnlineBd" style="padding:10px; font-size:13px; margin-top:8px;">
+      <button type="button" class="btn btn-amber" id="btnOnlineBd" style="padding:11px; font-size:13px; margin-top:10px;">
         🌐 Buscar más productos en Open Food Facts (Online)
       </button>
 
@@ -599,7 +681,7 @@
       <div id="listaBd" class="lista-scroll"></div>
     </div>
 
-    <!-- DIARIO DE COMIDAS DE HOY (EN MAYÚSCULAS Y SIN PARÉNTESIS) -->
+    <!-- DIARIO DE COMIDAS DE HOY -->
     <div class="card">
       <h3>🍽️ DIARIO DE COMIDAS DE HOY</h3>
       <div id="contenedorComidasAgrupadas"></div>
@@ -613,31 +695,30 @@
        ======================================================== -->
   <main id="secPremiumIa" class="hide">
 
-    <!-- BLOQUE PROMOCIONAL DE SUSCRIPCIÓN PREMIUM -->
-    <div class="card" style="background: linear-gradient(145deg, #1e1b4b 0%, #312e81 100%); color:#ffffff; border:1px solid #4338ca;">
+    <div class="card" style="background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%); color:#ffffff; border:2px solid #4338ca; box-shadow:0 10px 24px rgba(15,23,42,0.3);">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
-          <span style="background:#f59e0b; color:#0f172a; font-weight:800; font-size:11px; padding:3px 8px; border-radius:99px;">PLAN PRO</span>
+          <span style="background:#f59e0b; color:#0f172a; font-weight:900; font-size:11px; padding:3px 8px; border-radius:99px;">PLAN PRO</span>
           <h3 style="color:#ffffff; margin:6px 0 2px 0; font-size:22px;">Nutrievolution PRO</h3>
           <p style="font-size:13px; color:#c7d2fe; margin:0 0 10px 0;">Inteligencia Artificial Nutricional Avanzada</p>
         </div>
         <div style="text-align:right;">
-          <div style="font-size:20px; font-weight:800; color:#34d399;">GRATIS</div>
+          <div style="font-size:20px; font-weight:900; color:#34d399;">GRATIS</div>
           <div style="font-size:11px; color:#cbd5e1; text-decoration:line-through;">9,99€/mes</div>
         </div>
       </div>
 
-      <div style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-top:8px; font-size:13px; line-height:1.6;">
+      <div style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-top:8px; font-size:13px; line-height:1.6; border:1px solid rgba(255,255,255,0.12);">
         <div style="display:flex; align-items:center; gap:8px;">✅ <b>Análisis multimodal con Gemini 3.8 Flash</b> (Foto + Texto).</div>
         <div style="display:flex; align-items:center; gap:8px;">✅ <b>Cálculo inteligente del peso real</b> de la ración en gramos.</div>
-        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Desglose exacto de macros</b> (Proteína, Carbohidratos, Grasas, Kcal).</div>
+        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Composiciones visuales HD con IA</b> para compartir en Instagram/WhatsApp.</div>
         <div style="display:flex; align-items:center; gap:8px;">✅ <b>Sin anuncios</b> y con almacenamiento 100% privado en tu móvil.</div>
       </div>
 
-      <button type="button" class="btn" id="btnSuscribirsePromo" style="background:#10b981; color:#fff; font-size:15px; margin-top:14px;">
+      <button type="button" class="btn" id="btnSuscribirsePromo" style="background:#10b981; border-color:#059669; color:#fff; font-size:15px; margin-top:14px;">
         ⭐ Activar Suscripción Gratis (Promoción Limitada)
       </button>
-      <div id="msgPromoActiva" style="font-size:12px; text-align:center; margin-top:6px; color:#a7f3d0; font-weight:700;">
+      <div id="msgPromoActiva" style="font-size:12px; text-align:center; margin-top:6px; color:#a7f3d0; font-weight:800;">
         ¡Tu cuenta tiene acceso PRO ilimitado activo!
       </div>
     </div>
@@ -649,10 +730,9 @@
         Toma una foto de tu plato o descríbelo con tus palabras para que Gemini Flash 3.8 calcule automáticamente el peso y sus nutrientes:
       </p>
 
-      <label style="color:var(--indigo); font-weight:800;">📝 Nombre o ingredientes del plato:</label>
+      <label style="color:var(--indigo); font-weight:900;">📝 Nombre o ingredientes del plato:</label>
       <textarea id="descripcionIaInput" rows="2" placeholder="Ej: Plato de garbanzos con espinacas y 2 huevos cocidos / Merluza al horno con patatas..."></textarea>
 
-      <!-- Botones de Cámara y Galería para el plato -->
       <label style="margin-top:12px;">📸 Añadir fotografía del plato (Opcional):</label>
       <div class="grid2" style="margin-top:6px;">
         <button type="button" class="btn btn-outline" id="btnCamaraPlato">📷 Hacer Foto</button>
@@ -661,16 +741,15 @@
       <input type="file" id="inputCamaraPlato" accept="image/*" capture="environment" class="hide">
       <input type="file" id="inputGaleriaPlato" accept="image/*" class="hide">
 
-      <!-- Preview de la foto del plato -->
       <div id="boxPreviewPlato" class="hide" style="margin-top:10px; position:relative;">
-        <img id="previewFotoPlato" style="width:100%; max-height:190px; object-fit:cover; border-radius:12px; border:1.5px solid var(--border);">
+        <img id="previewFotoPlato" style="width:100%; max-height:190px; object-fit:cover; border-radius:12px; border:2px solid var(--border-field);">
         <button type="button" id="btnQuitarFotoPlato" class="btn btn-red" style="position:absolute; top:8px; right:8px; background:rgba(15,23,42,0.85); color:#fff;">✕ Quitar foto</button>
       </div>
 
       <div class="grid2" style="margin-top:12px;">
         <div>
           <label>Añadir a la toma:</label>
-          <select id="selectMomentoIa" style="font-weight:700;">
+          <select id="selectMomentoIa" style="font-weight:800;">
             <option value="Desayuno">☕ Desayuno</option>
             <option value="Almuerzo" selected>🍲 Almuerzo</option>
             <option value="Cena">🌙 Cena</option>
@@ -685,10 +764,9 @@
         </div>
       </div>
 
-      <div id="estadoAnalisisIa" style="font-size:13px; color:var(--indigo); margin-top:8px; text-align:center; font-weight:700;"></div>
+      <div id="estadoAnalisisIa" style="font-size:13px; color:var(--indigo); margin-top:8px; text-align:center; font-weight:800;"></div>
 
-      <!-- Resultados detectados -->
-      <div style="margin-top:14px; border-top:1.5px solid var(--border-light); padding-top:12px;">
+      <div style="margin-top:14px; border-top:2px solid var(--border-light); padding-top:12px;">
         <div class="grid2">
           <div><label>Alimento detectado:</label><input type="text" id="resNombre" placeholder="Resultado del análisis..."></div>
           <div><label style="color:var(--green);">⚖️ Peso estimado (g):</label><input type="number" id="resPesoGramos" value="200" min="1" oninput="recalcularMacroProporcional()"></div>
@@ -718,7 +796,6 @@
       <h3>📈 Evolución y Métricas</h3>
       <p style="font-size:13px; color:var(--muted); margin:0 0 10px 0;">Selecciona el intervalo de consolidación y el rango de fechas:</p>
 
-      <!-- Selector Diaria, Semanal, Mensual -->
       <div style="display:flex; gap:6px; margin-bottom:10px;">
         <button type="button" class="chip-cat active" id="btnAgrupDiaria" style="flex:1; text-align:center;">📅 Diaria</button>
         <button type="button" class="chip-cat" id="btnAgrupSemanal" style="flex:1; text-align:center;">📊 Semanal</button>
@@ -733,7 +810,7 @@
         Aplicar Filtro
       </button>
 
-      <div id="resumenGlobalBox" style="margin-top:12px; font-size:13px; color:var(--text); background:#ffffff; padding:12px; border-radius:12px; border:1.5px solid var(--border-light);"></div>
+      <div id="resumenGlobalBox" style="margin-top:12px; font-size:13px; color:var(--text); background:#ffffff; padding:12px; border-radius:12px; border:2px solid var(--border-light);"></div>
     </div>
 
     <!-- 5 GRÁFICAS SVG CON ESCALA -->
@@ -774,7 +851,7 @@
 
   <!-- PIE DE PÁGINA CON ENLACES LEGALES Y PRIVACIDAD -->
   <footer class="app-footer">
-    <div><strong>Nutrievolution V3</strong> · Tu diario nutricional inteligente</div>
+    <div><strong>Nutrievolution V4</strong> · Tu diario nutricional inteligente</div>
     <div style="margin-top:8px;">
       <a href="/privacy.html" target="_blank">🔒 Política de Privacidad</a> |
       <a href="#" id="linkTerminos">📜 Términos y Condiciones</a> |
@@ -799,9 +876,12 @@
     </button>
   </nav>
 
+  <!-- CANVAS OCULTO PARA COMPOSICIÓN GRÁFICA HD (1080 x 1350) -->
+  <canvas id="canvasShareHidden" width="1080" height="1350"></canvas>
+
   <script>
     // =========================================================================
-    // 1. AMPLIA BASE DE DATOS LOCAL CON UNIDADES Y RACIONES ESTIMADAS
+    // 1. BASE DE DATOS LOCAL CON RACIONES ESTIMADAS
     // =========================================================================
     var BASE_ALIMENTOS_AMPLIADA = [
       // FRUTAS
@@ -880,7 +960,7 @@
       { n: 'Champiñones / Setas salteadas', cat: 'Verduras', k: 26, p: 3.1, c: 3.3, f: 0.3, unNom: '1 plato (160g)', pesoUn: 160 },
       { n: 'Ensalada verde variada (lechuga/canónigos)', cat: 'Verduras', k: 17, p: 1.3, c: 2.9, f: 0.2, unNom: '1 bol ensalada (100g)', pesoUn: 100 },
 
-      // GRASAS SALUDABLES Y SUPLEMENTOS
+      // GRASAS Y SUPLEMENTOS
       { n: 'Aceite de Oliva Virgen Extra (AOVE)', cat: 'Grasas/Supl', k: 884, p: 0.0, c: 0.0, f: 100.0, unNom: '1 cucharada sopera (10g)', pesoUn: 10 },
       { n: 'Aguacate fresco', cat: 'Grasas/Supl', k: 160, p: 2.0, c: 8.5, f: 14.7, unNom: '1/2 aguacate (90g)', pesoUn: 90 },
       { n: 'Nueces peladas naturales', cat: 'Grasas/Supl', k: 654, p: 15.2, c: 13.7, f: 65.2, unNom: '1 puñado (30g)', pesoUn: 30 },
@@ -896,13 +976,14 @@
     // =========================================================================
     var API_KEY_DEFAULT = 'AQ.Ab8RN6LHbyo6HUaTEZ-jnKa1U-M-U_oglIFCyoSTaLDaqZb-iQ';
     var MODELO_DEFAULT = 'gemini-3.8-flash';
+    var APP_URL_PROMO = 'https://nutrievolution-ten.vercel.app/';
 
-    var baseDatosDiaria = JSON.parse(localStorage.getItem('nutrievo_diario_v3')) ||
-                          JSON.parse(localStorage.getItem('ms_diario_pro_v6')) ||
-                          JSON.parse(localStorage.getItem('ms_diario_pro_v5')) || {};
+    var baseDatosDiaria = JSON.parse(localStorage.getItem('nutrievo_diario_v4')) ||
+                          JSON.parse(localStorage.getItem('nutrievo_diario_v3')) ||
+                          JSON.parse(localStorage.getItem('ms_diario_pro_v6')) || {};
 
-    var favoritosGuardados = JSON.parse(localStorage.getItem('nutrievo_favoritos_v3')) ||
-                             JSON.parse(localStorage.getItem('ms_favoritos_v7')) || [
+    var favoritosGuardados = JSON.parse(localStorage.getItem('nutrievo_favoritos_v4')) ||
+                             JSON.parse(localStorage.getItem('nutrievo_favoritos_v3')) || [
       { n: 'Manzana fresca', cat: 'Frutas', k: 52, p: 0.3, c: 13.8, f: 0.2, unNom: '1 pieza mediana (180g)', pesoUn: 180 },
       { n: 'Pechuga de pollo fresca', cat: 'Carnes', k: 110, p: 23.0, c: 0.0, f: 1.5, unNom: '1 filete mediano (150g)', pesoUn: 150 },
       { n: 'Huevo entero talla M/L', cat: 'Huevos/Lácteos', k: 143, p: 12.6, c: 0.7, f: 9.5, unNom: '1 huevo (60g)', pesoUn: 60 },
@@ -910,8 +991,8 @@
       { n: 'Proteína Whey en polvo', cat: 'Grasas/Supl', k: 385, p: 78.0, c: 6.0, f: 5.5, unNom: '1 cazo dosificador (30g)', pesoUn: 30 }
     ];
 
-    var metasCustom = JSON.parse(localStorage.getItem('nutrievo_metas_v3')) ||
-                      JSON.parse(localStorage.getItem('ms_metas_custom')) ||
+    var metasCustom = JSON.parse(localStorage.getItem('nutrievo_metas_v4')) ||
+                      JSON.parse(localStorage.getItem('nutrievo_metas_v3')) ||
                       { k: 2150, p: 165, c: 190, f: 65, autoPeso: true };
 
     var apiKeyActual = localStorage.getItem('nutrievo_api_key') || API_KEY_DEFAULT;
@@ -920,12 +1001,15 @@
 
     var categoriaActiva = 'Recientes';
     var soloFavoritosActivo = false;
-    var modoMedidaActual = 'gramos'; // 'gramos' o 'unidades'
-    var tipoAgrupacionEvolucion = 'diaria'; // 'diaria', 'semanal', 'mensual'
+    var modoMedidaActual = 'gramos';
+    var tipoAgrupacionEvolucion = 'diaria';
 
     var resultadosOnlineExtra = [];
     var fotoPlatoBase64 = null;
     var macroBase100g = { p: 0, c: 0, f: 0, k: 0 };
+
+    var ultimaComposicionBlob = null;
+    var ultimoTextoShare = '';
 
     var hoyStr = new Date().toISOString().split('T')[0];
     var selectorFecha = document.getElementById('selectorFecha');
@@ -997,8 +1081,13 @@
       document.getElementById('modalTerminos').className = 'modal-foto hide';
     });
 
+    // Modal de Share IA
+    document.getElementById('btnCerrarModalShare').addEventListener('click', function() {
+      document.getElementById('modalShareIa').className = 'modal-foto hide';
+    });
+
     // =========================================================================
-    // 4. CONTROL DE PESTAÑAS (DIARIO, IA PREMIUM, EVOLUCIÓN)
+    // 4. CONTROL DE PESTAÑAS
     // =========================================================================
     var navDiario = document.getElementById('navDiario');
     var navPremiumIa = document.getElementById('navPremiumIa');
@@ -1033,7 +1122,6 @@
       }
     });
 
-    // Modal Zoom Fotos
     function abrirFotoZoom(src, titulo) {
       if (!src) return;
       document.getElementById('imgZoomReal').src = src;
@@ -1045,7 +1133,7 @@
     });
 
     // =========================================================================
-    // 5. ENTRADA DE PESO (CORREGIDO PARA DECIMALES) Y % GRASA CORPORAL
+    // 5. ENTRADA DE PESO Y GRASA CORPORAL
     // =========================================================================
     function parsearDecimal(str) {
       if (!str) return 0;
@@ -1073,11 +1161,10 @@
       guardarYActualizar();
     });
 
-    // Metas y auto cálculo
     function calcularMetasDefinicionPorPeso(pesoKg) {
       var pVal = parseFloat(pesoKg) || 73.0;
       var tmb = (10 * pVal) + (6.25 * 176) - (5 * 47) + 5;
-      var kMeta = Math.round((tmb * 1.55) * 0.85); // -15% déficit
+      var kMeta = Math.round((tmb * 1.55) * 0.85);
       var pMeta = Math.round(pVal * 2.2);
       var fMeta = Math.round(pVal * 0.9);
       var cMeta = Math.max(0, Math.round((kMeta - (pMeta * 4) - (fMeta * 9)) / 4));
@@ -1095,7 +1182,7 @@
       var pesoHoy = parsearDecimal(baseDatosDiaria[fKey].peso) || 73.0;
       var calc = calcularMetasDefinicionPorPeso(pesoHoy);
       metasCustom = { k: calc.k, p: calc.p, c: calc.c, f: calc.f, autoPeso: true };
-      localStorage.setItem('nutrievo_metas_v3', JSON.stringify(metasCustom));
+      localStorage.setItem('nutrievo_metas_v4', JSON.stringify(metasCustom));
       document.getElementById('editMetaKcal').value = metasCustom.k;
       document.getElementById('editMetaProt').value = metasCustom.p;
       document.getElementById('editMetaCarb').value = metasCustom.c;
@@ -1111,13 +1198,13 @@
         f: parseInt(document.getElementById('editMetaGrasa').value) || 65,
         autoPeso: false
       };
-      localStorage.setItem('nutrievo_metas_v3', JSON.stringify(metasCustom));
+      localStorage.setItem('nutrievo_metas_v4', JSON.stringify(metasCustom));
       document.getElementById('panelEditarMetas').className = 'hide';
       actualizarVista();
     });
 
     // =========================================================================
-    // 6. FOTO CORPORAL: CÁMARA EN EL MOMENTO Y GALERÍA
+    // 6. FOTO CORPORAL: CÁMARA Y GALERÍA
     // =========================================================================
     document.getElementById('btnCamaraCuerpo').addEventListener('click', function() {
       document.getElementById('inputFotoDiaCamara').click();
@@ -1129,7 +1216,7 @@
     function procesarFotoCorporal(e) {
       var file = e.target.files[0];
       if (!file) return;
-      comprimirImagen(file, 680, function(b64) {
+      comprimirImagen(file, 800, function(b64) {
         var fKey = obtenerFecha();
         asegurarDia(fKey);
         baseDatosDiaria[fKey].fotoCuerpo = b64;
@@ -1157,7 +1244,7 @@
           if (w > maxW) { h = Math.round(h * (maxW / w)); w = maxW; }
           canvas.width = w; canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          cb(canvas.toDataURL('image/jpeg', 0.8));
+          cb(canvas.toDataURL('image/jpeg', 0.85));
         };
         img.src = ev.target.result;
       };
@@ -1165,15 +1252,19 @@
     }
 
     // =========================================================================
-    // 7. COMPARTIR EN INSTAGRAM
+    // 7. REQUISITO 2: GENERACIÓN DE COMPOSICIÓN IA PREMIUM (CANVAS HD + GEMINI FLASH 3.8)
     // =========================================================================
-    document.getElementById('btnCompartirInstagram').addEventListener('click', async function() {
+    document.getElementById('btnCompartirIaPremium').addEventListener('click', async function() {
       var fKey = obtenerFecha();
       var diaObj = baseDatosDiaria[fKey];
       if (!diaObj || diaObj.alimentos.length === 0) {
-        alert('Aún no tienes alimentos registrados en la fecha ' + fKey + ' para compartir.');
+        alert('Aún no tienes alimentos registrados en la fecha ' + fKey + '. Registra al menos una comida para generar tu composición con IA.');
         return;
       }
+
+      var bannerEstado = document.getElementById('estadoGenerandoShare');
+      bannerEstado.className = '';
+      bannerEstado.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       var sk = 0, sp = 0, sc = 0, sf = 0;
       for (var i = 0; i < diaObj.alimentos.length; i++) {
@@ -1183,61 +1274,294 @@
         sf += diaObj.alimentos[i].f;
       }
 
-      var texto = '🥗 MI DIARIO NUTRIEVOLUTION - ' + fKey + '\n';
-      if (diaObj.peso) texto += '⚖️ Peso: ' + diaObj.peso + ' kg\n';
-      if (diaObj.grasa) texto += '💧 Grasa corporal: ' + diaObj.grasa + '%\n';
-      texto += '🔥 Calorías: ' + Math.round(sk) + ' / ' + metasCustom.k + ' kcal\n';
-      texto += '💪 Prot: ' + Math.round(sp) + 'g | 🌾 Carbs: ' + Math.round(sc) + 'g | 🥑 Grasas: ' + Math.round(sf) + 'g\n\n';
-      texto += '🍽️ Comidas destacadas de hoy:\n';
+      var pesoStr = diaObj.peso ? diaObj.peso + ' kg' : 'No registrado';
+      var grasaStr = diaObj.grasa ? diaObj.grasa + '%' : 'No registrado';
 
-      for (var j = 0; j < Math.min(diaObj.alimentos.length, 6); j++) {
-        var it = diaObj.alimentos[j];
-        texto += '• [' + (it.momento || 'Comida') + '] ' + it.nombre + ' (' + Math.round(it.kcal) + ' kcal)\n';
+      // 1. Llamar a Gemini Flash 3.8 para generar titular y valoración nutricional experta
+      var fraseIa = '¡Día impecable! Gran aporte de proteína y adherencia al objetivo.';
+      try {
+        var promptComposicion = 'Eres un entrenador y nutricionista de élite. Analiza este resumen diario: ' +
+          'Fecha: ' + fKey + ', Calorías consumidas: ' + Math.round(sk) + ' de ' + metasCustom.k + ' kcal meta. ' +
+          'Proteínas: ' + Math.round(sp) + 'g de ' + metasCustom.p + 'g meta. Carbohidratos: ' + Math.round(sc) + 'g. Grasas: ' + Math.round(sf) + 'g. ' +
+          'Peso: ' + pesoStr + ', Grasa: ' + grasaStr + '. ' +
+          'Genera una frase motivadora, concisa (máximo 12 palabras), con emojis y potente para una historia de Instagram. Devuelve SOLO esa frase sin comillas.';
+
+        var resIa = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + modeloActual + ':generateContent?key=' + apiKeyActual, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: promptComposicion }] }] })
+        });
+
+        if (resIa.ok) {
+          var dataIa = await resIa.json();
+          var respuestaTexto = dataIa.candidates[0].content.parts[0].text.trim();
+          if (respuestaTexto) fraseIa = respuestaTexto;
+        }
+      } catch (err) {
+        console.warn('Usando frase motivadora local para composición:', err);
       }
-      texto += '\n✨ Registrado con #Nutrievolution V3';
 
-      // 1. Copiar siempre al portapapeles
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        try { await navigator.clipboard.writeText(texto); } catch (e) {}
+      // 2. Renderizar composición en Canvas HD (1080 x 1350 vertical estilo Story/Post)
+      var canvas = document.getElementById('canvasShareHidden');
+      var ctx = canvas.getContext('2d');
+      var W = 1080;
+      var H = 1350;
+
+      // Fondo base gradiente oscuro elegante
+      var bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+      bgGrad.addColorStop(0, '#090d16');
+      bgGrad.addColorStop(0.5, '#0f172a');
+      bgGrad.addColorStop(1, '#1e1b4b');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Si hay foto corporal, integrarla con recorte elegante y gradiente
+      if (diaObj.fotoCuerpo) {
+        await new Promise(function(resolve) {
+          var imgFoto = new Image();
+          imgFoto.onload = function() {
+            var fotoH = 500;
+            var fotoY = 170;
+            var fotoW = W - 100;
+            var fotoX = 50;
+
+            ctx.save();
+            // Borde redondeado para la foto
+            ctx.beginPath();
+            ctx.roundRect(fotoX, fotoY, fotoW, fotoH, 24);
+            ctx.clip();
+
+            // Dibujar imagen manteniendo proporción cover
+            var rSrc = imgFoto.width / imgFoto.height;
+            var rDst = fotoW / fotoH;
+            var sW, sH, sX, sY;
+            if (rSrc > rDst) {
+              sH = imgFoto.height;
+              sW = imgFoto.height * rDst;
+              sX = (imgFoto.width - sW) / 2;
+              sY = 0;
+            } else {
+              sW = imgFoto.width;
+              sH = imgFoto.width / rDst;
+              sX = 0;
+              sY = (imgFoto.height - sH) / 2;
+            }
+            ctx.drawImage(imgFoto, sX, sY, sW, sH, fotoX, fotoY, fotoW, fotoH);
+
+            // Gradiente viñeta oscuro inferior sobre la foto
+            var gradOverlay = ctx.createLinearGradient(0, fotoY + fotoH - 140, 0, fotoY + fotoH);
+            gradOverlay.addColorStop(0, 'rgba(15, 23, 42, 0)');
+            gradOverlay.addColorStop(1, 'rgba(15, 23, 42, 0.9)');
+            ctx.fillStyle = gradOverlay;
+            ctx.fillRect(fotoX, fotoY, fotoW, fotoH);
+
+            ctx.restore();
+
+            // Borde brillante
+            ctx.strokeStyle = '#4338ca';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.roundRect(fotoX, fotoY, fotoW, fotoH, 24);
+            ctx.stroke();
+
+            resolve();
+          };
+          imgFoto.src = diaObj.fotoCuerpo;
+        });
       }
 
-      // 2. Si el navegador soporta Web Share con archivos y hay foto corporal
+      // Cabecera de la composición
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 48px Inter, system-ui, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('🥗 NUTRIEVOLUTION', 60, 95);
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = '800 24px Inter, system-ui, sans-serif';
+      ctx.fillText('DIARIO NUTRICIONAL CON IA', 60, 135);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '800 28px Inter, system-ui, sans-serif';
+      ctx.fillText('📅 ' + fKey, W - 60, 105);
+
+      // Frase motivacional destacada de Gemini
+      var baseYTexto = diaObj.fotoCuerpo ? 720 : 250;
+      ctx.fillStyle = '#e0e7ff';
+      ctx.beginPath();
+      ctx.roundRect(50, baseYTexto, W - 100, 100, 18);
+      ctx.fill();
+      ctx.strokeStyle = '#818cf8';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#1e1b4b';
+      ctx.font = '900 30px Inter, system-ui, sans-serif';
+      ctx.fillText(fraseIa, W / 2, baseYTexto + 60);
+
+      // Bloque de Métricas y Calorías
+      var yStats = baseYTexto + 130;
+
+      // Caja de Calorías
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.beginPath();
+      ctx.roundRect(50, yStats, W - 100, 130, 20);
+      ctx.fill();
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '800 24px Inter, system-ui, sans-serif';
+      ctx.fillText('ENERGÍA CONSUMIDA', 90, yStats + 50);
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = '900 52px Inter, system-ui, sans-serif';
+      ctx.fillText(Math.round(sk) + ' kcal', 90, yStats + 105);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '800 28px Inter, system-ui, sans-serif';
+      ctx.fillText('Objetivo: ' + metasCustom.k + ' kcal', W - 90, yStats + 80);
+
+      // 3 Cajas de Macronutrientes
+      var yMacros = yStats + 155;
+      var anchoCard = (W - 100 - 32) / 3;
+
+      // Proteínas
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.roundRect(50, yMacros, anchoCard, 115, 16); ctx.fill();
+      ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#60a5fa'; ctx.font = '800 20px Inter, sans-serif'; ctx.fillText('PROTEÍNAS', 50 + anchoCard/2, yMacros + 38);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 42px Inter, sans-serif'; ctx.fillText(Math.round(sp) + 'g', 50 + anchoCard/2, yMacros + 90);
+
+      // Carbohidratos
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.roundRect(50 + anchoCard + 16, yMacros, anchoCard, 115, 16); ctx.fill();
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.fillStyle = '#fbbf24'; ctx.font = '800 20px Inter, sans-serif'; ctx.fillText('CARBOS', 50 + anchoCard + 16 + anchoCard/2, yMacros + 38);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 42px Inter, sans-serif'; ctx.fillText(Math.round(sc) + 'g', 50 + anchoCard + 16 + anchoCard/2, yMacros + 90);
+
+      // Grasas
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.roundRect(50 + (anchoCard*2) + 32, yMacros, anchoCard, 115, 16); ctx.fill();
+      ctx.strokeStyle = '#e11d48'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.fillStyle = '#f87171'; ctx.font = '800 20px Inter, sans-serif'; ctx.fillText('GRASAS', 50 + (anchoCard*2) + 32 + anchoCard/2, yMacros + 38);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 42px Inter, sans-serif'; ctx.fillText(Math.round(sf) + 'g', 50 + (anchoCard*2) + 32 + anchoCard/2, yMacros + 90);
+
+      // Bloque Peso y Grasa
+      var yBio = yMacros + 140;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.beginPath(); ctx.roundRect(50, yBio, W - 100, 80, 16); ctx.fill();
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 2; ctx.stroke();
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '800 26px Inter, sans-serif';
+      ctx.fillText('⚖️ Peso: ' + pesoStr, 90, yBio + 50);
+
+      ctx.textAlign = 'right';
+      ctx.fillText('💧 % Grasa: ' + grasaStr, W - 90, yBio + 50);
+
+      // REQUISITO 2: FOOTER CON ENLACE VISIBLE A LA APLICACIÓN
+      var yFooter = H - 120;
+      var gradBannerApp = ctx.createLinearGradient(50, yFooter, W - 50, yFooter);
+      gradBannerApp.addColorStop(0, '#4338ca');
+      gradBannerApp.addColorStop(0.5, '#7c3aed');
+      gradBannerApp.addColorStop(1, '#db2777');
+      ctx.fillStyle = gradBannerApp;
+      ctx.beginPath();
+      ctx.roundRect(50, yFooter, W - 100, 85, 20);
+      ctx.fill();
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 28px Inter, sans-serif';
+      ctx.fillText('📲 Pruébala gratis en: ' + APP_URL_PROMO, W / 2, yFooter + 52);
+
+      // 3. Exportar composición a imagen Blob / DataURL
+      canvas.toBlob(function(blob) {
+        ultimaComposicionBlob = blob;
+        var urlComp = URL.createObjectURL(blob);
+        document.getElementById('imgComposicionPreview').src = urlComp;
+        document.getElementById('txtComentarioIaPreview').textContent = '🤖 Valoración Gemini: "' + fraseIa + '"';
+
+        // Preparar texto para portapapeles / compartir
+        ultimoTextoShare = '🥗 MI DIARIO NUTRIEVOLUTION (' + fKey + ')\n' +
+          '🔥 Calorías: ' + Math.round(sk) + ' / ' + metasCustom.k + ' kcal\n' +
+          '💪 Proteínas: ' + Math.round(sp) + 'g | 🌾 Carbos: ' + Math.round(sc) + 'g | 🥑 Grasas: ' + Math.round(sf) + 'g\n' +
+          (diaObj.peso ? '⚖️ Peso: ' + diaObj.peso + ' kg\n' : '') +
+          (diaObj.grasa ? '💧 % Grasa: ' + diaObj.grasa + '%\n' : '') +
+          '✨ ' + fraseIa + '\n\n' +
+          '👉 Entra y pruébala gratis aquí: ' + APP_URL_PROMO;
+
+        bannerEstado.className = 'hide';
+        document.getElementById('modalShareIa').className = 'modal-foto';
+      }, 'image/jpeg', 0.92);
+    });
+
+    // Acciones del modal Share IA
+    document.getElementById('btnAccionCompartirNativo').addEventListener('click', async function() {
+      if (!ultimaComposicionBlob) return;
+
       if (navigator.share) {
         try {
-          if (diaObj.fotoCuerpo && navigator.canShare) {
-            var blob = await (await fetch(diaObj.fotoCuerpo)).blob();
-            var file = new File([blob], 'diario_nutrievolution_' + fKey + '.jpg', { type: 'image/jpeg' });
-            if (navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                title: 'Mi Diario Nutricional - Nutrievolution',
-                text: texto,
-                files: [file]
-              });
-              return;
-            }
+          var fKey = obtenerFecha();
+          var file = new File([ultimaComposicionBlob], 'nutrievolution_' + fKey + '.jpg', { type: 'image/jpeg' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              title: 'Nutrievolution - Diario Nutricional',
+              text: ultimoTextoShare,
+              files: [file]
+            });
+            return;
           }
           await navigator.share({
-            title: 'Mi Diario Nutricional - Nutrievolution',
-            text: texto
+            title: 'Nutrievolution - Diario Nutricional',
+            text: ultimoTextoShare,
+            url: APP_URL_PROMO
           });
           return;
         } catch (err) {
-          // El usuario canceló o el navegador no pudo compartir directamente
+          // Si cancela o falla, continuamos a abrir instagram
         }
       }
 
-      // 3. Fallback: aviso y apertura directa de Instagram
-      alert('📋 ¡Resumen copiado al portapapeles!\n\nAbriendo Instagram para que puedas pegarlo directamente en tus Stories o publicación.');
+      // Fallback
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ultimoTextoShare);
+      }
+      alert('📋 ¡Resumen y enlace copiados al portapapeles!\n\nAbriendo Instagram para que publiques tu composición.');
       window.location.href = 'instagram://app';
       setTimeout(function() {
         window.open('https://www.instagram.com/', '_blank');
       }, 1000);
     });
 
+    document.getElementById('btnDescargarComposicion').addEventListener('click', function() {
+      if (!ultimaComposicionBlob) return;
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(ultimaComposicionBlob);
+      a.download = 'Nutrievolution_' + obtenerFecha() + '.jpg';
+      a.click();
+    });
+
+    document.getElementById('btnCopiarTextoShare').addEventListener('click', async function() {
+      if (!ultimoTextoShare) return;
+      try {
+        await navigator.clipboard.writeText(ultimoTextoShare);
+        alert('✅ Texto copiado al portapapeles listo para pegar en WhatsApp o Instagram.');
+      } catch (err) {
+        alert('No se pudo copiar automáticamente. Puedes compartir la imagen directamente.');
+      }
+    });
+
     // =========================================================================
-    // 8. BASE DE ALIMENTOS: RECIENTES/FRECUENTES, POR GRAMOS Y POR RACIÓN/UNIDAD
+    // 8. BASE DE ALIMENTOS: RECIENTES, GRAMOS Y UNIDADES
     // =========================================================================
-    // Toggle de Modo de Medida
     var btnModoGramos = document.getElementById('modoGramos');
     var btnModoUnidades = document.getElementById('modoUnidades');
     var boxInputGramos = document.getElementById('boxInputGramos');
@@ -1265,7 +1589,6 @@
     document.getElementById('inputUnidadesBd').addEventListener('input', dibujarBaseDatos);
     document.getElementById('inputBuscarBd').addEventListener('input', dibujarBaseDatos);
 
-    // Filtros por Categoría
     var chips = document.querySelectorAll('#barraCategorias .chip-cat');
     for (var cIdx = 0; cIdx < chips.length; cIdx++) {
       chips[cIdx].addEventListener('click', function() {
@@ -1303,12 +1626,11 @@
           pesoUn: itemObj.pesoUn || 100
         });
       }
-      localStorage.setItem('nutrievo_favoritos_v3', JSON.stringify(favoritosGuardados));
+      localStorage.setItem('nutrievo_favoritos_v4', JSON.stringify(favoritosGuardados));
       dibujarBaseDatos();
       actualizarVista();
     }
 
-    // Obtener alimentos recientes y frecuentes basados en el historial diario
     function obtenerAlimentosRecientesYFrecuentes() {
       var mapaConteo = {};
       var fechas = Object.keys(baseDatosDiaria).sort().reverse();
@@ -1340,7 +1662,6 @@
         }
       }
 
-      // Si aún no hay historial, devolver los favoritos o primeros alimentos básicos
       if (recientes.length === 0) {
         return favoritosGuardados.slice(0, 10);
       }
@@ -1417,10 +1738,10 @@
 
           var info = document.createElement('div');
           var refUnidad = item.unNom ? '<div style="font-size:11px; color:var(--muted);">' + item.unNom + '</div>' : '';
-          info.innerHTML = '<b>' + item.n + '</b> <span style="color:var(--indigo); font-weight:700;">(' + textoMedida + ')</span>' +
+          info.innerHTML = '<b>' + item.n + '</b> <span style="color:var(--indigo); font-weight:800;">(' + textoMedida + ')</span>' +
                            refUnidad +
-                           '<span style="color:var(--green); font-weight:800; font-size:14px;">' + kCalc + ' kcal</span> · ' +
-                           '<span style="font-size:12px; color:var(--muted); font-weight:600;">P:' + pCalc + 'g C:' + cCalc + 'g G:' + fCalc + 'g</span>';
+                           '<span style="color:var(--green); font-weight:900; font-size:14px;">' + kCalc + ' kcal</span> · ' +
+                           '<span style="font-size:12px; color:var(--muted); font-weight:700;">P:' + pCalc + 'g C:' + cCalc + 'g G:' + fCalc + 'g</span>';
 
           izq.appendChild(btnStar);
           izq.appendChild(info);
@@ -1459,7 +1780,6 @@
       }
     }
 
-    // Búsqueda Online con Open Food Facts
     document.getElementById('btnOnlineBd').addEventListener('click', function() {
       var q = document.getElementById('inputBuscarBd').value.trim();
       var msg = document.getElementById('msgBd');
@@ -1520,7 +1840,7 @@
     function procesarFotoPlato(e) {
       var file = e.target.files[0];
       if (!file) return;
-      comprimirImagen(file, 550, function(b64) {
+      comprimirImagen(file, 600, function(b64) {
         fotoPlatoBase64 = b64;
         var img = document.getElementById('previewFotoPlato');
         img.src = fotoPlatoBase64;
@@ -1552,7 +1872,7 @@
         var parts = [];
         var promptTexto = 'Eres un nutricionista experto. Analiza este plato de comida' +
           (desc ? ' descrito como: "' + desc + '"' : ' que aparece en la imagen') +
-          '. Estima con precisión el peso total de la ración en gramos (si el usuario indica unidades o gramos en el texto, respétalos). Calcula los nutrientes por cada 100g del plato. Devuelve EXCLUSIVAMENTE un JSON válido sin markdown ni comillas triples: {"name": "nombre descriptivo en español", "peso_estimado_g": numero_entero, "kcal_100g": numero, "p_100g": numero, "c_100g": numero, "f_100g": numero}';
+          '. Estima con precisión el peso total de la ración en gramos (si el usuario indica unidades o gramos en el texto, respétalos). Calcula los nutrientes por cada 100g del plato. Devuelve EXCLUSIVAMENTE un JSON válido sin markdown: {"name": "nombre descriptivo en español", "peso_estimado_g": numero_entero, "kcal_100g": numero, "p_100g": numero, "c_100g": numero, "f_100g": numero}';
 
         parts.push({ text: promptTexto });
 
@@ -1569,7 +1889,6 @@
         });
 
         if (!res.ok && modeloActual !== 'gemini-2.5-flash') {
-          // Fallback automático por si el endpoint de versión 3.8 tuviera discrepancia regional
           urlApi = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKeyActual;
           res = await fetch(urlApi, {
             method: 'POST',
@@ -1698,7 +2017,6 @@
       alert('✅ Plato añadido al diario de ' + momento + '.');
       cambiarPestana('diario');
 
-      // Limpiar formulario IA
       fotoPlatoBase64 = null;
       document.getElementById('boxPreviewPlato').className = 'hide';
       document.getElementById('resNombre').value = '';
@@ -1712,12 +2030,12 @@
     });
 
     function guardarYActualizar() {
-      localStorage.setItem('nutrievo_diario_v3', JSON.stringify(baseDatosDiaria));
+      localStorage.setItem('nutrievo_diario_v4', JSON.stringify(baseDatosDiaria));
       actualizarVista();
     }
 
     // =========================================================================
-    // 10. VISTA DIARIA: DIARIO DE COMIDAS DE HOY (SIN PARÉNTESIS Y EN MAYÚSCULAS)
+    // 10. VISTA DIARIA: DIARIO DE COMIDAS DE HOY
     // =========================================================================
     function actualizarVista() {
       var fKey = obtenerFecha();
@@ -1727,7 +2045,6 @@
       document.getElementById('inputPesoDia').value = diaObj.peso || '';
       document.getElementById('inputGrasaDia').value = diaObj.grasa || '';
 
-      // Foto corporal con zoom
       var boxFotoHoy = document.getElementById('boxFotoCuerpoHoy');
       if (diaObj.fotoCuerpo) {
         boxFotoHoy.className = '';
@@ -1751,7 +2068,6 @@
         sf += lista[i].f;
       }
 
-      // Kcal
       document.getElementById('txtKcalConsumidas').textContent = Math.round(sk);
       document.getElementById('txtKcalMeta').textContent = metasCustom.k;
       var restKcal = metasCustom.k - Math.round(sk);
@@ -1767,7 +2083,6 @@
       }
       document.getElementById('barKcal').style.width = Math.min(100, (sk / metasCustom.k) * 100) + '%';
 
-      // Macros
       document.getElementById('txtProtConsumidas').textContent = Math.round(sp);
       document.getElementById('txtProtMeta').textContent = metasCustom.p;
       var pPct = Math.round((sp / metasCustom.p) * 100);
@@ -1786,7 +2101,6 @@
       document.getElementById('pctGrasa').textContent = fPct + '% de meta';
       document.getElementById('barGrasa').style.width = Math.min(100, fPct) + '%';
 
-      // Render agrupado por tomas: Desayuno, Almuerzo, Cena, Tentempié/Otros
       var contenedor = document.getElementById('contenedorComidasAgrupadas');
       contenedor.innerHTML = '';
 
@@ -1817,7 +2131,7 @@
           var header = document.createElement('div');
           header.className = 'comida-header';
           header.innerHTML = '<span>' + (iconos[tomaNom] || '🍽️') + ' ' + tomaNom.toUpperCase() + '</span>' +
-                             '<span style="color:var(--green); font-size:14px;">' + Math.round(subKcal) + ' kcal · Prot: ' + Math.round(subP) + 'g</span>';
+                             '<span style="color:var(--green); font-size:14px; font-weight:900;">' + Math.round(subKcal) + ' kcal · Prot: ' + Math.round(subP) + 'g</span>';
           block.appendChild(header);
 
           for (var k = 0; k < filtrados.length; k++) {
@@ -1839,7 +2153,7 @@
               }
 
               var txt = document.createElement('div');
-              txt.innerHTML = '<b>' + item.nombre + '</b><br><span style="color:var(--green); font-weight:700;">' + Math.round(item.kcal) + ' kcal</span> <span style="color:var(--muted); font-size:12px;">(P:' + item.p + 'g C:' + item.c + 'g G:' + item.f + 'g)</span>';
+              txt.innerHTML = '<b>' + item.nombre + '</b><br><span style="color:var(--green); font-weight:800;">' + Math.round(item.kcal) + ' kcal</span> <span style="color:var(--muted); font-size:12px; font-weight:700;">(P:' + item.p + 'g C:' + item.c + 'g G:' + item.f + 'g)</span>';
               izq.appendChild(txt);
 
               var btnDel = document.createElement('button');
@@ -1867,7 +2181,7 @@
     }
 
     // =========================================================================
-    // 11. GENERACIÓN DE GRÁFICAS SVG Y EVOLUCIÓN (DIARIA, SEMANAL, MENSUAL)
+    // 11. GENERACIÓN DE GRÁFICAS SVG Y EVOLUCIÓN
     // =========================================================================
     var btnAgrupDiaria = document.getElementById('btnAgrupDiaria');
     var btnAgrupSemanal = document.getElementById('btnAgrupSemanal');
@@ -1920,7 +2234,7 @@
       var stepW = plotW / datos.length;
       var barW = Math.min(36, Math.max(12, stepW * 0.65));
 
-      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%; height:auto; background:#ffffff; border-radius:14px; border:1.5px solid #cbd5e1;">';
+      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%; height:auto; background:#ffffff; border-radius:14px; border:2px solid #cbd5e1;">';
 
       var niveles = [0, 0.5, 1];
       for (var n = 0; n < niveles.length; n++) {
@@ -1928,7 +2242,7 @@
         var yLine = padT + plotH - (frac * plotH);
         var valEscala = Math.round(frac * maxVal);
         svg += '<line x1="' + padL + '" y1="' + yLine + '" x2="' + (W - padR) + '" y2="' + yLine + '" stroke="#e2e8f0" stroke-width="1.5"/>';
-        svg += '<text x="' + (padL - 6) + '" y="' + (yLine + 4) + '" text-anchor="end" fill="#64748b" font-size="10" font-weight="600">' + valEscala + '</text>';
+        svg += '<text x="' + (padL - 6) + '" y="' + (yLine + 4) + '" text-anchor="end" fill="#64748b" font-size="10" font-weight="700">' + valEscala + '</text>';
       }
 
       for (var j = 0; j < datos.length; j++) {
@@ -1939,7 +2253,7 @@
 
         svg += '<rect x="' + xBar + '" y="' + yBar + '" width="' + barW + '" height="' + hBar + '" rx="5" fill="' + colorBarra + '" opacity="0.95"/>';
         svg += '<text x="' + (xBar + barW / 2) + '" y="' + (yBar - 5) + '" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="bold">' + Math.round(d.valor) + '</text>';
-        svg += '<text x="' + (xBar + barW / 2) + '" y="' + (H - 8) + '" text-anchor="middle" fill="#475569" font-size="10" font-weight="600">' + d.etiqueta + '</text>';
+        svg += '<text x="' + (xBar + barW / 2) + '" y="' + (H - 8) + '" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">' + d.etiqueta + '</text>';
       }
 
       svg += '<line x1="' + padL + '" y1="' + yMeta + '" x2="' + (W - padR) + '" y2="' + yMeta + '" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="4,3"/>';
@@ -1950,7 +2264,7 @@
       cont.innerHTML = svg;
     }
 
-    function crearGraficaLineaPesoYGrasa(contenedorId, datosPeso, datosGrasa) {
+    function crearGraficaLineaPesoYGrasa(contenedorId, datosPeso) {
       var cont = document.getElementById(contenedorId);
       if (datosPeso.length === 0) {
         cont.innerHTML = '<div style="font-size:13px; color:var(--muted); text-align:center; padding:18px;">Introduce tu peso en el diario para ver la evolución</div>';
@@ -1972,18 +2286,18 @@
         puntos.push({ x: x, y: y, valor: datosPeso[i].valor, etiqueta: datosPeso[i].etiqueta });
       }
 
-      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%; height:auto; background:#ffffff; border-radius:14px; border:1.5px solid #cbd5e1;">';
-      svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" text-anchor="end" fill="#64748b" font-size="10" font-weight="600">' + maxP.toFixed(1) + '</text>';
-      svg += '<text x="' + (padL - 6) + '" y="' + (padT + plotH) + '" text-anchor="end" fill="#64748b" font-size="10" font-weight="600">' + minP.toFixed(1) + '</text>';
+      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%; height:auto; background:#ffffff; border-radius:14px; border:2px solid #cbd5e1;">';
+      svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" text-anchor="end" fill="#64748b" font-size="10" font-weight="700">' + maxP.toFixed(1) + '</text>';
+      svg += '<text x="' + (padL - 6) + '" y="' + (padT + plotH) + '" text-anchor="end" fill="#64748b" font-size="10" font-weight="700">' + minP.toFixed(1) + '</text>';
 
       var poly = puntos.map(function(pt) { return pt.x + ',' + pt.y; }).join(' ');
-      svg += '<polyline fill="none" stroke="#4338ca" stroke-width="3" points="' + poly + '"/>';
+      svg += '<polyline fill="none" stroke="#4338ca" stroke-width="3.5" points="' + poly + '"/>';
 
       for (var j = 0; j < puntos.length; j++) {
         var p = puntos[j];
-        svg += '<circle cx="' + p.x + '" cy="' + p.y + '" r="5" fill="#4338ca" stroke="#fff" stroke-width="2"/>';
-        svg += '<text x="' + p.x + '" y="' + (p.y - 9) + '" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="bold">' + p.valor.toFixed(1) + 'kg</text>';
-        svg += '<text x="' + p.x + '" y="' + (H - 8) + '" text-anchor="middle" fill="#475569" font-size="10" font-weight="600">' + p.etiqueta + '</text>';
+        svg += '<circle cx="' + p.x + '" cy="' + p.y + '" r="5.5" fill="#4338ca" stroke="#fff" stroke-width="2"/>';
+        svg += '<text x="' + p.x + '" y="' + (p.y - 10) + '" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="900">' + p.valor.toFixed(1) + 'kg</text>';
+        svg += '<text x="' + p.x + '" y="' + (H - 8) + '" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">' + p.etiqueta + '</text>';
       }
 
       svg += '</svg>';
@@ -2019,7 +2333,7 @@
           claveGrupo = dateObj.getFullYear() + '-Sem' + numSemana;
           etiquetaCorta = 'S' + numSemana;
         } else if (tipoAgrupacionEvolucion === 'mensual') {
-          claveGrupo = fKey.slice(0, 7); // AAAA-MM
+          claveGrupo = fKey.slice(0, 7);
           etiquetaCorta = fKey.slice(5, 7) + '/' + fKey.slice(2, 4);
         }
 
@@ -2048,7 +2362,7 @@
       var clavesOrdenadas = Object.keys(grupos).sort();
       var ultimosGrupos = clavesOrdenadas.slice(-10);
 
-      var serieKcal = [], serieProt = [], serieCarb = [], serieGrasa = [], seriePeso = [], serieGrasaPct = [];
+      var serieKcal = [], serieProt = [], serieCarb = [], serieGrasa = [], seriePeso = [];
       var totK = 0, totP = 0, totC = 0, totF = 0, sumaPeso = 0, contPeso = 0;
 
       for (var g = 0; g < ultimosGrupos.length; g++) {
@@ -2081,7 +2395,7 @@
       crearGraficaBarrasConMeta('svgChartProt', serieProt, metasCustom.p, '#2563eb', 'g');
       crearGraficaBarrasConMeta('svgChartCarb', serieCarb, metasCustom.c, '#f59e0b', 'g');
       crearGraficaBarrasConMeta('svgChartGrasa', serieGrasa, metasCustom.f, '#e11d48', 'g');
-      crearGraficaLineaPesoYGrasa('svgChartPeso', seriePeso, serieGrasaPct);
+      crearGraficaLineaPesoYGrasa('svgChartPeso', seriePeso);
 
       var globalBox = document.getElementById('resumenGlobalBox');
       if (todasFechas.length === 0) {
@@ -2098,7 +2412,6 @@
           '• Peso promedio: <b>' + pesoMedTxt + '</b>';
       }
 
-      // Historial Día a Día
       var contHistorial = document.getElementById('contenedorEvolucion');
       contHistorial.innerHTML = '';
       var fechasDesc = todasFechas.slice().reverse();
@@ -2116,7 +2429,7 @@
 
           var cardDia = document.createElement('div');
           cardDia.className = 'card';
-          cardDia.style.marginBottom = '12px';
+          cardDia.style.marginBottom = '14px';
 
           var pTxt = dObj.peso ? ' · ⚖️ ' + dObj.peso + ' kg' : '';
           var gTxt = dObj.grasa ? ' · 💧 ' + dObj.grasa + '%' : '';
@@ -2124,9 +2437,9 @@
           var header = document.createElement('div');
           header.style.display = 'flex';
           header.style.justifyContent = 'space-between';
-          header.style.fontWeight = '800';
+          header.style.fontWeight = '900';
           header.style.fontSize = '15px';
-          header.style.borderBottom = '1.5px solid var(--border-light)';
+          header.style.borderBottom = '2px solid var(--border-light)';
           header.style.paddingBottom = '8px';
           header.style.marginBottom = '8px';
           header.innerHTML = '<span>📅 ' + fDiaKey + '<span style="color:var(--indigo);">' + pTxt + gTxt + '</span></span>' +
@@ -2138,9 +2451,9 @@
           detalleMacros.style.color = 'var(--muted)';
           detalleMacros.style.marginBottom = '10px';
           detalleMacros.innerHTML = '🍽️ <b>' + dObj.alimentos.length + ' alimentos</b> · ' +
-            '<span style="color:var(--blue); font-weight:700;">Prot: ' + Math.round(sp) + 'g</span> · ' +
-            '<span style="color:var(--amber); font-weight:700;">Carbs: ' + Math.round(sc) + 'g</span> · ' +
-            '<span style="color:var(--rose); font-weight:700;">Grasas: ' + Math.round(sf) + 'g</span>';
+            '<span style="color:var(--blue); font-weight:800;">Prot: ' + Math.round(sp) + 'g</span> · ' +
+            '<span style="color:var(--amber); font-weight:800;">Carbs: ' + Math.round(sc) + 'g</span> · ' +
+            '<span style="color:var(--rose); font-weight:800;">Grasas: ' + Math.round(sf) + 'g</span>';
           cardDia.appendChild(detalleMacros);
 
           if (dObj.fotoCuerpo) {
@@ -2149,9 +2462,9 @@
             imgEl.style.width = '100%';
             imgEl.style.height = '180px';
             imgEl.style.objectFit = 'cover';
-            imgEl.style.borderRadius = '12px';
+            imgEl.style.borderRadius = '14px';
             imgEl.style.cursor = 'pointer';
-            imgEl.style.border = '1.5px solid var(--border)';
+            imgEl.style.border = '2px solid var(--border-field)';
             imgEl.onclick = function() {
               abrirFotoZoom(dObj.fotoCuerpo, 'Foto Corporal - ' + fDiaKey);
             };
@@ -2234,20 +2547,20 @@
         banner.style.alignItems = 'center';
         banner.style.justifyContent = 'space-between';
         banner.style.boxShadow = '0 10px 25px rgba(0,0,0,0.35)';
-        banner.style.border = '1px solid rgba(255,255,255,0.15)';
+        banner.style.border = '2px solid rgba(255,255,255,0.2)';
         banner.style.zIndex = '999';
 
         banner.innerHTML = `
           <div style="display:flex; align-items:center; gap:12px;">
-            <img src="/icon-192.png" style="width:40px; height:40px; border-radius:10px;">
+            <img src="/icon-192.png" style="width:40px; height:40px; border-radius:10px; border:1px solid #475569;">
             <div>
-              <div style="font-weight:800; font-size:14px;">Instalar Nutrievolution</div>
+              <div style="font-weight:900; font-size:14px;">Instalar Nutrievolution</div>
               <div style="font-size:12px; color:#94a3b8;">Acceso rápido y offline en tu móvil</div>
             </div>
           </div>
           <div style="display:flex; gap:8px;">
-            <button id="btnDismissInstall" style="background:transparent; border:none; color:#94a3b8; font-size:13px; cursor:pointer; font-weight:600;">Luego</button>
-            <button id="btnAcceptInstall" style="background:#10b981; color:#fff; border:none; font-weight:700; font-size:13px; padding:7px 14px; border-radius:10px; cursor:pointer;">Instalar</button>
+            <button id="btnDismissInstall" style="background:transparent; border:none; color:#94a3b8; font-size:13px; cursor:pointer; font-weight:700;">Luego</button>
+            <button id="btnAcceptInstall" style="background:#10b981; color:#fff; border:none; font-weight:800; font-size:13px; padding:7px 14px; border-radius:10px; cursor:pointer; box-shadow:0 2px 6px rgba(16,185,129,0.4);">Instalar</button>
           </div>
         `;
         document.body.appendChild(banner);
