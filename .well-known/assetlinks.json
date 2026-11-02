@@ -1,14 +1,8 @@
-[
-  {
-    "relation": [
-      "delegate_permission/common.handle_all_urls"
-    ],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "app.vercel.nutrievolution",
-      "sha256_cert_fingerprints": [
-        "REEMPLAZAR_CON_TU_HUELLA_SHA256_DE_GOOGLE_PLAY_CONSOLE_O_PWABUILDER"
-      ]
-    }
-  }
-]
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.nutrievolution_ten",
+        "sha256_cert_fingerprints": ["3B:E1:CB:64:F8:4F:DE:53:87:F6:82:BD:80:83:6F:8D:00:E1:50:51:FF:AD:D4:81:68:59:99:52:1C:AA:D8:DC"]
+      }
+    }]
