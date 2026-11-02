@@ -1,8 +1,11 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "app.vercel.nutrievolution_ten",
-        "sha256_cert_fingerprints": ["3B:E1:CB:64:F8:4F:DE:53:87:F6:82:BD:80:83:6F:8D:00:E1:50:51:FF:AD:D4:81:68:59:99:52:1C:AA:D8:DC"]
-      }
-    }]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.nutrievolution_ten",
+      "sha256_cert_fingerprints":
+        ["D7:D0:D4:C6:45:96:76:3A:68:F8:7A:C9:34:01:9B:DE:52:29:D8:2B:E5:92:FC:E4:83:FF:BB:02:D5:C0:91:E9"]
+    }
+  }
+]
