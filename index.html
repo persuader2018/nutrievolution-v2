@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <style>
     :root {
       --bg: #cbd5e1; /* Fondo pastel suave con excelente contraste */
@@ -428,7 +429,59 @@
     }
     .app-footer a:hover { text-decoration: underline; }
 
-    /* Canvas oculto para generación de imagen en pantalla completa (1080 x 1920) */
+
+    /* Estilos V6: Botones Bloqueados PRO, Lista Plan Pro adaptable y Escáner de Código de Barras */
+    .btn-locked {
+      opacity: 0.72;
+      filter: grayscale(35%);
+      position: relative;
+    }
+    .pro-benefits-list {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 14px;
+      border-radius: 14px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pro-benefit-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #f8fafc;
+      text-align: left;
+    }
+    .pro-benefit-icon {
+      flex-shrink: 0;
+      font-size: 15px;
+      margin-top: 1px;
+    }
+    /* Evitar saltos de layout al cambiar entre Gramos y Unidades */
+    .medida-input-wrapper {
+      min-height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .label-fixed-one-line {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 4px;
+    }
+    #readerBarcode {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid #4338ca;
+      background: #0f172a;
+    }
+    # canvasShareHidden { display: none; }
+
     #canvasShareHidden { display: none; }
   </style>
 </head>
@@ -533,6 +586,31 @@
     </div>
   </div>
 
+
+
+  <!-- MODAL ESCÁNER DE CÓDIGO DE BARRAS CON CÁMARA -->
+  <div id="modalBarcodeScanner" class="modal-foto hide">
+    <div class="modal-content" style="max-width:460px; text-align:center;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:17px;">📷 Escanear Código de Barras</h3>
+        <button type="button" class="btn btn-red" id="btnCerrarScanner" style="margin:0;">✕ Cerrar</button>
+      </div>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 10px 0;">
+        Apunta con la cámara al código de barras del envase (EAN-13 / EAN-8) o introdúcelo abajo:
+      </p>
+      <div id="readerBarcode" style="min-height:240px; margin-bottom:12px;"></div>
+      <div id="estadoScanner" style="font-size:12.5px; font-weight:800; color:var(--indigo); margin-bottom:10px;">
+        Iniciando cámara trasera...
+      </div>
+      <div style="border-top:2px solid var(--border-light); padding-top:10px; text-align:left;">
+        <label style="margin-top:0;">🔢 ¿No enfoca bien? Escribe el código manualmente:</label>
+        <div style="display:flex; gap:8px; margin-top:4px;">
+          <input type="text" inputmode="numeric" id="inputCodigoManual" placeholder="Ej: 8480000123456" style="margin-top:0; flex:1;">
+          <button type="button" class="btn btn-blue" id="btnBuscarCodigoManual" style="margin-top:0; width:auto; padding:0 16px;">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ========================================================
        PESTAÑA 1: DIARIO DE HOY
@@ -700,18 +778,18 @@
           <button type="button" id="modoUnidades" class="chip-modo">Por Unidades / Ración</button>
         </div>
 
-        <div class="grid2" style="margin-top:10px;">
-          <div id="boxInputGramos">
-            <label>Gramos a añadir (g):</label>
-            <input type="number" id="inputGramosBd" value="100" min="1" style="font-weight:900; color:var(--green); font-size:16px;">
+        <div class="grid2" style="margin-top:10px; align-items:end;">
+          <div id="boxInputGramos" class="medida-input-wrapper">
+            <label class="label-fixed-one-line">Cantidad (gramos):</label>
+            <input type="number" id="inputGramosBd" value="100" min="1" style="font-weight:900; color:var(--green); font-size:16px; height:46px;">
           </div>
-          <div id="boxInputUnidades" class="hide">
-            <label>Nº de unidades / raciones:</label>
-            <input type="number" id="inputUnidadesBd" value="1" min="0.25" step="0.25" style="font-weight:900; color:var(--indigo); font-size:16px;">
+          <div id="boxInputUnidades" class="medida-input-wrapper hide">
+            <label class="label-fixed-one-line">Cantidad (unidades):</label>
+            <input type="number" id="inputUnidadesBd" value="1" min="0.25" step="0.25" style="font-weight:900; color:var(--indigo); font-size:16px; height:46px;">
           </div>
-          <div>
-            <label>Añadir a la comida:</label>
-            <select id="selectMomentoBd" style="font-weight:800;">
+          <div class="medida-input-wrapper">
+            <label class="label-fixed-one-line">Añadir a la comida:</label>
+            <select id="selectMomentoBd" style="font-weight:800; height:46px;">
               <option value="Desayuno">☕ Desayuno</option>
               <option value="Almuerzo" selected>🍲 Almuerzo</option>
               <option value="Cena">🌙 Cena</option>
@@ -722,13 +800,18 @@
       </div>
 
       <div style="margin-top:10px;">
-        <label>Buscar alimento o marca:</label>
-        <input type="text" id="inputBuscarBd" placeholder="Ej. manzana, merluza, solomillo, arroz...">
+        <label>Buscar por nombre, marca o código de barras:</label>
+        <input type="text" id="inputBuscarBd" placeholder="Ej. hacendado, yogur, merluza o código EAN...">
       </div>
 
-      <button type="button" class="btn btn-amber" id="btnOnlineBd" style="padding:11px; font-size:13px; margin-top:10px;">
-        🌐 Buscar más productos en Open Food Facts (Online)
-      </button>
+      <div class="grid2" style="margin-top:10px;">
+        <button type="button" class="btn btn-amber" id="btnOnlineBd" style="padding:11px 10px; font-size:13px; margin-top:0;">
+          🌐 Buscar Online
+        </button>
+        <button type="button" class="btn btn-indigo" id="btnAbrirScanner" style="padding:11px 10px; font-size:13px; margin-top:0;">
+          📷 Escanear Código
+        </button>
+      </div>
 
       <div id="msgBd" style="font-size:12px; color:var(--muted); margin-top:8px;">
         Toca <b>⭐</b> para marcar favorito o <b>+ Añadir</b> para registrarlo hoy:
@@ -750,31 +833,43 @@
        ======================================================== -->
   <main id="secPremiumIa" class="hide">
 
-    <div class="card" style="background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%); color:#ffffff; border:2px solid #4338ca; box-shadow:0 10px 24px rgba(15,23,42,0.3);">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div>
-          <span style="background:#f59e0b; color:#0f172a; font-weight:900; font-size:11px; padding:3px 8px; border-radius:99px;">PLAN PRO</span>
-          <h3 style="color:#ffffff; margin:6px 0 2px 0; font-size:22px;">Nutrievolution PRO</h3>
-          <p style="font-size:13px; color:#c7d2fe; margin:0 0 10px 0;">Inteligencia Artificial Nutricional Avanzada</p>
+    <div class="card" id="cardPlanPro" style="background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%); color:#ffffff; border:2px solid #4338ca; box-shadow:0 10px 24px rgba(15,23,42,0.3);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:190px;">
+          <span id="badgeEstadoPro" style="background:#f59e0b; color:#0f172a; font-weight:900; font-size:11px; padding:4px 9px; border-radius:99px; display:inline-block;">PLAN PRO · REQUIERE ACTIVACIÓN</span>
+          <h3 style="color:#ffffff; margin:8px 0 3px 0; font-size:21px; line-height:1.2;">Nutrievolution PRO</h3>
+          <p style="font-size:13px; color:#c7d2fe; margin:0;">Inteligencia Artificial Nutricional Avanzada</p>
         </div>
-        <div style="text-align:right;">
-          <div style="font-size:20px; font-weight:900; color:#34d399;">GRATIS</div>
+        <div style="text-align:right; background:rgba(16,185,129,0.15); border:1px solid rgba(52,211,153,0.4); padding:6px 12px; border-radius:12px; flex-shrink:0;">
+          <div style="font-size:18px; font-weight:900; color:#34d399; line-height:1.1;">GRATIS</div>
           <div style="font-size:11px; color:#cbd5e1; text-decoration:line-through;">9,99€/mes</div>
         </div>
       </div>
 
-      <div style="background:rgba(255,255,255,0.08); padding:12px; border-radius:12px; margin-top:8px; font-size:13px; line-height:1.6; border:1px solid rgba(255,255,255,0.12);">
-        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Análisis multimodal con Gemini 3.8 Flash</b> (Foto + Texto).</div>
-        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Cálculo inteligente del peso real</b> de la ración en gramos.</div>
-        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Composiciones HD con IA</b> para compartir en Instagram/WhatsApp.</div>
-        <div style="display:flex; align-items:center; gap:8px;">✅ <b>Sin anuncios</b> y con almacenamiento 100% privado en tu móvil.</div>
+      <div class="pro-benefits-list">
+        <div class="pro-benefit-row">
+          <span class="pro-benefit-icon">✅</span>
+          <div><strong>Análisis multimodal con Gemini 3.8 Flash:</strong> reconoce platos por foto y descripción de texto.</div>
+        </div>
+        <div class="pro-benefit-row">
+          <span class="pro-benefit-icon">✅</span>
+          <div><strong>Estimación automática de ración:</strong> calcula el peso real en gramos y desglosa sus macronutrientes.</div>
+        </div>
+        <div class="pro-benefit-row">
+          <span class="pro-benefit-icon">✅</span>
+          <div><strong>Composiciones HD 9:16 con IA:</strong> genera tarjetas verticales listas para compartir en Instagram o WhatsApp.</div>
+        </div>
+        <div class="pro-benefit-row">
+          <span class="pro-benefit-icon">✅</span>
+          <div><strong>Privacidad total sin anuncios:</strong> tus datos se guardan al 100% en la memoria de tu dispositivo.</div>
+        </div>
       </div>
 
-      <button type="button" class="btn" id="btnSuscribirsePromo" style="background:#10b981; border-color:#059669; color:#fff; font-size:15px; margin-top:14px;">
-        ⭐ Activar Suscripción Gratis (Promoción Limitada)
+      <button type="button" class="btn" id="btnSuscribirsePromo" style="background:#f59e0b; border-color:#d97706; color:#0f172a; font-size:15px; font-weight:900; margin-top:14px;">
+        🔓 Activar Suscripción PRO Gratis (Tiempo Limitado)
       </button>
-      <div id="msgPromoActiva" style="font-size:12px; text-align:center; margin-top:6px; color:#a7f3d0; font-weight:800;">
-        ¡Tu cuenta tiene acceso PRO ilimitado activo!
+      <div id="msgPromoActiva" style="font-size:12.5px; text-align:center; margin-top:8px; color:#fde68a; font-weight:800;">
+        🔒 Pulsa el botón superior para desbloquear «Analizar Plato por IA» y «Compartir con IA».
       </div>
     </div>
 
@@ -1069,6 +1164,66 @@
     var macroBase100g = { p: 0, c: 0, f: 0, k: 0 };
 
     var ultimaComposicionBlob = null;
+    var suscripcionProActiva = localStorage.getItem('nutrievo_pro_activo_v6') === 'true';
+    var html5QrCodeScanner = null;
+
+    function actualizarEstadoVisualPro() {
+      var btnPromo = document.getElementById('btnSuscribirsePromo');
+      var msgPromo = document.getElementById('msgPromoActiva');
+      var badgePro = document.getElementById('badgeEstadoPro');
+      var btnAnalizar = document.getElementById('btnAnalizar');
+      var btnShare = document.getElementById('btnCompartirIaPremium');
+
+      if (suscripcionProActiva) {
+        if (badgePro) {
+          badgePro.textContent = 'PLAN PRO · ACTIVO ✅';
+          badgePro.style.background = '#10b981';
+          badgePro.style.color = '#ffffff';
+        }
+        if (btnPromo) {
+          btnPromo.textContent = '✅ Suscripción PRO Activa (Ilimitada)';
+          btnPromo.style.background = '#10b981';
+          btnPromo.style.borderColor = '#059669';
+          btnPromo.style.color = '#ffffff';
+        }
+        if (msgPromo) {
+          msgPromo.textContent = '🎉 ¡Funciones «Analizar Plato por IA» y «Compartir con IA» desbloqueadas!';
+          msgPromo.style.color = '#a7f3d0';
+        }
+        if (btnAnalizar) {
+          btnAnalizar.classList.remove('btn-locked');
+          btnAnalizar.innerHTML = '✨ Analizar con IA';
+        }
+        if (btnShare) {
+          btnShare.classList.remove('btn-locked');
+          btnShare.innerHTML = '✨ Compartir (IA Premium)';
+        }
+      } else {
+        if (badgePro) {
+          badgePro.textContent = 'PLAN PRO · REQUIERE ACTIVACIÓN';
+          badgePro.style.background = '#f59e0b';
+          badgePro.style.color = '#0f172a';
+        }
+        if (btnPromo) {
+          btnPromo.textContent = '🔓 Activar Suscripción PRO Gratis (Tiempo Limitado)';
+          btnPromo.style.background = '#f59e0b';
+          btnPromo.style.borderColor = '#d97706';
+          btnPromo.style.color = '#0f172a';
+        }
+        if (msgPromo) {
+          msgPromo.textContent = '🔒 Pulsa el botón superior para desbloquear «Analizar Plato por IA» y «Compartir con IA».';
+          msgPromo.style.color = '#fde68a';
+        }
+        if (btnAnalizar) {
+          btnAnalizar.classList.add('btn-locked');
+          btnAnalizar.innerHTML = '🔒 Analizar con IA (Activar PRO)';
+        }
+        if (btnShare) {
+          btnShare.classList.add('btn-locked');
+          btnShare.innerHTML = '🔒 Compartir (Requiere PRO)';
+        }
+      }
+    }
 
     var hoyStr = new Date().toISOString().split('T')[0];
     var selectorFecha = document.getElementById('selectorFecha');
@@ -1176,9 +1331,11 @@
     document.getElementById('btnSuscribirsePromo').addEventListener('click', function() {
       if (enlacePagoActual) {
         window.open(enlacePagoActual, '_blank');
-      } else {
-        alert('🎉 ¡Enhorabuena! Tienes acceso ilimitado a Nutrievolution PRO gratis por tiempo limitado.');
       }
+      suscripcionProActiva = true;
+      localStorage.setItem('nutrievo_pro_activo_v6', 'true');
+      actualizarEstadoVisualPro();
+      alert('🎉 ¡Suscripción Nutrievolution PRO activada gratis por tiempo limitado!\n\nYa tienes desbloqueados los botones «Analizar Plato con IA» y «Compartir (IA Premium)».');
     });
 
     function abrirFotoZoom(src, titulo) {
@@ -1314,6 +1471,13 @@
     // 7. COMPOSICIÓN IA EN VERTICAL PANTALLA COMPLETA 9:16 (1080 x 1920) SIN BANDAS NEGRAS
     // =========================================================================
     document.getElementById('btnCompartirIaPremium').addEventListener('click', async function() {
+      if (!suscripcionProActiva) {
+        alert('🔒 Función exclusiva del Plan PRO.\n\nActiva primero tu suscripción gratuita por tiempo limitado en la pestaña «IA Premium» para desbloquear esta función.');
+        cambiarPestana('ia');
+        var cardPro = document.getElementById('cardPlanPro');
+        if (cardPro) cardPro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
       var fKey = obtenerFecha();
       var diaObj = baseDatosDiaria[fKey];
       if (!diaObj || diaObj.alimentos.length === 0) {
@@ -1737,20 +1901,38 @@
       return recientes.slice(0, 20);
     }
 
+    function normalizarTextoBusqueda(str) {
+      return String(str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+    }
+
     function obtenerListaFiltradaBd() {
-      var q = document.getElementById('inputBuscarBd').value.toLowerCase().trim();
+      var qNorm = normalizarTextoBusqueda(document.getElementById('inputBuscarBd').value);
+      var palabras = qNorm ? qNorm.split(/\s+/) : [];
       var fuente = [];
 
       if (soloFavoritosActivo) {
         fuente = favoritosGuardados;
       } else if (categoriaActiva === 'Recientes') {
-        fuente = obtenerAlimentosRecientesYFrecuentes();
+        // Si el usuario escribe en el buscador estando en "Recientes", buscamos en toda la base + online para que siempre encuentre resultados
+        if (qNorm.length > 0) {
+          fuente = resultadosOnlineExtra.concat(BASE_ALIMENTOS_AMPLIADA);
+        } else {
+          fuente = obtenerAlimentosRecientesYFrecuentes();
+        }
       } else {
-        fuente = BASE_ALIMENTOS_AMPLIADA.concat(resultadosOnlineExtra);
+        // Poner resultadosOnlineExtra PRIMERO para que al buscar online aparezcan arriba del todo
+        fuente = resultadosOnlineExtra.concat(BASE_ALIMENTOS_AMPLIADA);
       }
 
       return fuente.filter(function(item) {
-        var coincideTexto = !q || item.n.toLowerCase().indexOf(q) !== -1;
+        var textoItem = normalizarTextoBusqueda(item.n + ' ' + (item.searchTag || '') + ' ' + (item.cat || ''));
+        var coincideTexto = true;
+        for (var w = 0; w < palabras.length; w++) {
+          if (textoItem.indexOf(palabras[w]) === -1) {
+            coincideTexto = false;
+            break;
+          }
+        }
         var coincideCat = soloFavoritosActivo || categoriaActiva === 'Recientes' || categoriaActiva === 'Todos' || item.cat === categoriaActiva;
         return coincideTexto && coincideCat;
       });
@@ -1849,51 +2031,247 @@
       }
     }
 
-    document.getElementById('btnOnlineBd').addEventListener('click', function() {
-      var q = document.getElementById('inputBuscarBd').value.trim();
-      var msg = document.getElementById('msgBd');
-      if (!q) return alert('Escribe primero el alimento o marca que deseas buscar.');
+    // Función auxiliar para activar visualmente el chip "Todos" cuando vienen resultados online
+    function activarVistaResultadosOnline() {
+      soloFavoritosActivo = false;
+      var btnFav = document.getElementById('btnFiltroFav');
+      if (btnFav) {
+        btnFav.className = 'btn btn-outline';
+        btnFav.textContent = '⭐ Solo Favoritos';
+      }
+      categoriaActiva = 'Todos';
+      var chipsCat = document.querySelectorAll('#barraCategorias .chip-cat');
+      for (var k = 0; k < chipsCat.length; k++) {
+        if (chipsCat[k].getAttribute('data-cat') === 'Todos') {
+          chipsCat[k].className = 'chip-cat active';
+        } else {
+          chipsCat[k].className = 'chip-cat';
+        }
+      }
+    }
 
-      msg.textContent = '⏳ Buscando "' + q + '" en Open Food Facts...';
-      fetch('https://es.openfoodfacts.org/cgi/search.pl?search_terms=' + encodeURIComponent(q) + '&search_simple=1&action=process&json=1&page_size=20')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var prods = data.products || [];
-          var nuevos = [];
-          for (var i = 0; i < prods.length; i++) {
-            var pr = prods[i];
-            if (pr.product_name && pr.nutriments) {
-              var nu = pr.nutriments;
-              var p100 = parseFloat(nu.proteins_100g) || 0;
-              var c100 = parseFloat(nu.carbohydrates_100g) || 0;
-              var f100 = parseFloat(nu.fat_100g) || 0;
-              var k100 = parseFloat(nu['energy-kcal_100g']) || Math.round(p100*4 + c100*4 + f100*9);
-              var marca = pr.brands ? ' (' + pr.brands.split(',')[0] + ')' : '';
-              var serving = pr.serving_size || '1 ración (100g)';
-              nuevos.push({
-                n: pr.product_name + marca,
-                cat: 'Todos',
-                k: Math.round(k100),
-                p: Number(p100.toFixed(1)),
-                c: Number(c100.toFixed(1)),
-                f: Number(f100.toFixed(1)),
-                unNom: serving,
-                pesoUn: 100
-              });
+    function parsearProductoOpenFoodFacts(pr, queryTag) {
+      if (!pr) return null;
+      var nombreProd = (pr.product_name_es || pr.product_name || pr.generic_name_es || pr.generic_name || '').trim();
+      var marcaRaw = (pr.brands || '').split(',')[0].trim();
+      if (!nombreProd && marcaRaw) nombreProd = marcaRaw;
+      if (!nombreProd) return null;
+
+      var nu = pr.nutriments || {};
+      var p100 = parseFloat(nu.proteins_100g) || parseFloat(nu.proteins_serving) || 0;
+      var c100 = parseFloat(nu.carbohydrates_100g) || parseFloat(nu.carbohydrates_serving) || 0;
+      var f100 = parseFloat(nu.fat_100g) || parseFloat(nu.fat_serving) || 0;
+      var k100 = parseFloat(nu['energy-kcal_100g']);
+      if (isNaN(k100) || k100 <= 0) {
+        var kj = parseFloat(nu.energy_100g) || parseFloat(nu['energy-kj_100g']);
+        if (!isNaN(kj) && kj > 0) {
+          k100 = Math.round(kj / 4.184);
+        } else {
+          k100 = Math.round((p100 * 4) + (c100 * 4) + (f100 * 9));
+        }
+      }
+      var marcaTxt = (marcaRaw && nombreProd.toLowerCase().indexOf(marcaRaw.toLowerCase()) === -1) ? ' (' + marcaRaw + ')' : '';
+      var servingTxt = pr.serving_size || '1 ración (100g)';
+      var matchPesoUn = servingTxt.match(/(\d+)\s*g/i);
+      var pesoUnitario = matchPesoUn ? parseInt(matchPesoUn[1]) : (parseInt(pr.serving_quantity) || 100);
+
+      return {
+        n: nombreProd + marcaTxt,
+        searchTag: (queryTag || '').toLowerCase() + ' ' + (pr.code || '') + ' ' + (pr.brands || '').toLowerCase(),
+        cat: 'Todos',
+        k: Math.max(0, Math.round(k100)),
+        p: Math.max(0, Number(p100.toFixed(1))),
+        c: Math.max(0, Number(c100.toFixed(1))),
+        f: Math.max(0, Number(f100.toFixed(1))),
+        unNom: servingTxt,
+        pesoUn: pesoUnitario > 0 ? pesoUnitario : 100
+      };
+    }
+
+    async function buscarPorCodigoDeBarras(codigoStr) {
+      var limpio = String(codigoStr || '').replace(/\D/g, '').trim();
+      var msg = document.getElementById('msgBd');
+      if (!limpio || limpio.length < 6) {
+        alert('Introduce o escanea un código de barras válido (mínimo 6 dígitos).');
+        return;
+      }
+
+      msg.innerHTML = '⏳ Buscando código de barras <b>' + limpio + '</b> en Open Food Facts...';
+      document.getElementById('inputBuscarBd').value = limpio;
+
+      var urlsCodigo = [
+        'https://world.openfoodfacts.org/api/v2/product/' + encodeURIComponent(limpio) + '.json?fields=code,product_name,product_name_es,generic_name,brands,nutriments,serving_size,serving_quantity',
+        'https://es.openfoodfacts.org/api/v0/product/' + encodeURIComponent(limpio) + '.json'
+      ];
+
+      for (var u = 0; u < urlsCodigo.length; u++) {
+        try {
+          var res = await fetch(urlsCodigo[u]);
+          if (res.ok) {
+            var data = await res.json();
+            if ((data.status === 1 || data.status === '1' || data.product) && data.product) {
+              var itemParsed = parsearProductoOpenFoodFacts(data.product, limpio);
+              if (itemParsed) {
+                // Evitar duplicados exactos al principio
+                resultadosOnlineExtra = [itemParsed].concat(resultadosOnlineExtra.filter(function(x) { return x.n !== itemParsed.n; }));
+                activarVistaResultadosOnline();
+                // Limpiar la caja de búsqueda o poner el nombre para que se vea inmediatamente arriba del todo
+                document.getElementById('inputBuscarBd').value = itemParsed.n;
+                dibujarBaseDatos();
+                msg.innerHTML = '✅ Producto encontrado por código <b>' + limpio + '</b>: <b>' + itemParsed.n + '</b>';
+                return;
+              }
             }
           }
-          if (nuevos.length > 0) {
-            resultadosOnlineExtra = nuevos.concat(resultadosOnlineExtra);
-            soloFavoritosActivo = false;
-            categoriaActiva = 'Todos';
-            msg.textContent = '✅ ' + nuevos.length + ' productos encontrados online. Puedes guardarlos en favoritos:';
-            dibujarBaseDatos();
-          } else {
-            msg.textContent = '⚠️ No se encontraron productos con ese término en Open Food Facts.';
+        } catch (err) {
+          console.warn('Intento código fallido en endpoint:', urlsCodigo[u], err);
+        }
+      }
+
+      msg.innerHTML = '⚠️ No se encontró el código <b>' + limpio + '</b> en Open Food Facts. Puedes buscarlo por nombre o analizar el envase con IA.';
+    }
+
+    document.getElementById('btnOnlineBd').addEventListener('click', async function() {
+      var q = document.getElementById('inputBuscarBd').value.trim();
+      var msg = document.getElementById('msgBd');
+      if (!q) return alert('Escribe primero el alimento, marca o código de barras que deseas buscar.');
+
+      // Si el usuario ha escrito directamente un código de barras numérico (8 a 14 dígitos)
+      if (/^\d{8,14}$/.test(q)) {
+        await buscarPorCodigoDeBarras(q);
+        return;
+      }
+
+      msg.innerHTML = '⏳ Buscando <b>"' + q + '"</b> en Open Food Facts...';
+
+      var endpointsBusqueda = [
+        'https://es.openfoodfacts.org/cgi/search.pl?search_terms=' + encodeURIComponent(q) + '&search_simple=1&action=process&json=1&page_size=35&fields=code,product_name,product_name_es,generic_name,brands,nutriments,serving_size,serving_quantity',
+        'https://world.openfoodfacts.org/cgi/search.pl?search_terms=' + encodeURIComponent(q) + '&search_simple=1&action=process&json=1&page_size=35&fields=code,product_name,product_name_es,generic_name,brands,nutriments,serving_size,serving_quantity',
+        'https://world.openfoodfacts.org/api/v2/search?search_terms=' + encodeURIComponent(q) + '&page_size=35&fields=code,product_name,product_name_es,generic_name,brands,nutriments,serving_size,serving_quantity'
+      ];
+
+      var prods = null;
+      for (var eIdx = 0; eIdx < endpointsBusqueda.length; eIdx++) {
+        try {
+          var controller = new AbortController();
+          var timeoutId = setTimeout(function() { controller.abort(); }, 8000);
+          var response = await fetch(endpointsBusqueda[eIdx], { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (response.ok) {
+            var data = await response.json();
+            if (data && Array.isArray(data.products) && data.products.length > 0) {
+              prods = data.products;
+              break;
+            }
           }
-        }).catch(function() {
-          msg.textContent = '⚠️ Sin conexión con Open Food Facts. Mostrando base interna.';
-        });
+        } catch (err) {
+          console.warn('Fallback búsqueda online:', err);
+        }
+      }
+
+      if (!prods) {
+        msg.innerHTML = '⚠️ No hubo respuesta de Open Food Facts o no existen coincidencias para "' + q + '". Mostrando coincidencias locales.';
+        activarVistaResultadosOnline();
+        dibujarBaseDatos();
+        return;
+      }
+
+      var nuevos = [];
+      var nombresVistos = {};
+      for (var i = 0; i < prods.length; i++) {
+        var parsed = parsearProductoOpenFoodFacts(prods[i], q);
+        if (parsed && !nombresVistos[parsed.n.toLowerCase()]) {
+          nombresVistos[parsed.n.toLowerCase()] = true;
+          nuevos.push(parsed);
+        }
+      }
+
+      if (nuevos.length > 0) {
+        // Colocar todos los resultados recién buscados al principio de la lista online
+        resultadosOnlineExtra = nuevos.concat(resultadosOnlineExtra.filter(function(x) {
+          return !nombresVistos[x.n.toLowerCase()];
+        }));
+        activarVistaResultadosOnline();
+        dibujarBaseDatos();
+        msg.innerHTML = '✅ <b>' + nuevos.length + ' productos encontrados online</b> para "' + q + '" (mostrados abajo en la lista):';
+      } else {
+        msg.innerHTML = '⚠️ No se encontraron productos con datos nutricionales para "' + q + '".';
+      }
+    });
+
+    // =========================================================================
+    // ESCÁNER DE CÓDIGO DE BARRAS POR CÁMARA (HTML5-QRCODE + BARCODEDETECTOR)
+    // =========================================================================
+    async function detenerScannerCamara() {
+      if (html5QrCodeScanner) {
+        try {
+          if (html5QrCodeScanner.isScanning) {
+            await html5QrCodeScanner.stop();
+          }
+          html5QrCodeScanner.clear();
+        } catch (e) {
+          console.warn('Error deteniendo escáner:', e);
+        }
+        html5QrCodeScanner = null;
+      }
+    }
+
+    document.getElementById('btnAbrirScanner').addEventListener('click', async function() {
+      var modal = document.getElementById('modalBarcodeScanner');
+      var estado = document.getElementById('estadoScanner');
+      document.getElementById('inputCodigoManual').value = '';
+      modal.className = 'modal-foto';
+      estado.textContent = '⏳ Activando cámara trasera...';
+
+      await detenerScannerCamara();
+
+      if (typeof Html5Qrcode === 'undefined') {
+        estado.textContent = '⚠️ Librería de cámara no disponible sin conexión. Introduce el código manualmente abajo.';
+        return;
+      }
+
+      try {
+        html5QrCodeScanner = new Html5Qrcode('readerBarcode');
+        var config = {
+          fps: 12,
+          qrbox: { width: 250, height: 120 },
+          aspectRatio: 1.333
+        };
+        await html5QrCodeScanner.start(
+          { facingMode: 'environment' },
+          config,
+          async function(decodedText) {
+            // Código detectado con éxito
+            var codigoDetectado = String(decodedText || '').trim();
+            if (codigoDetectado) {
+              estado.textContent = '✅ ¡Código detectado: ' + codigoDetectado + '!';
+              await detenerScannerCamara();
+              modal.className = 'modal-foto hide';
+              await buscarPorCodigoDeBarras(codigoDetectado);
+            }
+          },
+          function() {
+            // Escaneando fotograma...
+          }
+        );
+        estado.textContent = '🎯 Apunta al código de barras del producto...';
+      } catch (err) {
+        console.warn('No se pudo abrir cámara:', err);
+        estado.textContent = '⚠️ No se pudo acceder a la cámara (revisa los permisos del navegador) o usa el campo manual inferior.';
+      }
+    });
+
+    document.getElementById('btnCerrarScanner').addEventListener('click', async function() {
+      await detenerScannerCamara();
+      document.getElementById('modalBarcodeScanner').className = 'modal-foto hide';
+    });
+
+    document.getElementById('btnBuscarCodigoManual').addEventListener('click', async function() {
+      var cod = document.getElementById('inputCodigoManual').value.trim();
+      if (!cod) return alert('Escribe los números del código de barras.');
+      await detenerScannerCamara();
+      document.getElementById('modalBarcodeScanner').className = 'modal-foto hide';
+      await buscarPorCodigoDeBarras(cod);
     });
 
     // =========================================================================
@@ -1927,6 +2305,12 @@
     });
 
     document.getElementById('btnAnalizar').addEventListener('click', async function() {
+      if (!suscripcionProActiva) {
+        alert('🔒 Función exclusiva del Plan PRO.\n\nPulsa primero el botón «🔓 Activar Suscripción PRO Gratis» que tienes justo arriba en esta pestaña para desbloquear el análisis por IA.');
+        var cardPro = document.getElementById('cardPlanPro');
+        if (cardPro) cardPro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
       var desc = document.getElementById('descripcionIaInput').value.trim();
       var estadoMsg = document.getElementById('estadoAnalisisIa');
 
@@ -2603,6 +2987,7 @@
     }
 
     // Inicializar
+    actualizarEstadoVisualPro();
     dibujarBaseDatos();
     actualizarVista();
   </script>
