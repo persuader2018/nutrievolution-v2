@@ -483,8 +483,8 @@
         <h3 style="margin:0;">🛠️ Modo Desarrollador</h3>
         <button type="button" class="btn btn-red" id="btnCerrarDev" style="margin:0;">✕</button>
       </div>
-      <label>🔑 Clave API Gemini Manual:</label>
-      <input type="password" id="devApiKeyInput" placeholder="Clave API personalizada...">
+      <label>🔑 Clave API Gemini Manual (Opcional - por defecto usa Vercel):</label>
+      <input type="password" id="devApiKeyInput" placeholder="Vacío = usa clave segura de Vercel (/api/gemini)">
       <label>⚡ Modelo Gemini:</label>
       <input type="text" id="devModeloInput" value="gemini-3.8-flash">
       <label>💳 Enlace de Pago / Suscripción futura:</label>
@@ -1029,7 +1029,7 @@
     // =========================================================================
     // 2. CONFIGURACIÓN, PERSISTENCIA Y VARIABLES GLOBALES
     // =========================================================================
-    var API_KEY_DEFAULT = 'AQ.Ab8RN6LHbyo6HUaTEZ-jnKa1U-M-U_oglIFCyoSTaLDaqZb-iQ';
+    var API_KEY_DEFAULT = ''; // Clave protegida en el servidor Vercel (/api/gemini)
     var MODELO_DEFAULT = 'gemini-3.8-flash';
     var APP_URL_PROMO = 'https://nutrievolution-ten.vercel.app/';
 
@@ -1050,7 +1050,12 @@
                       JSON.parse(localStorage.getItem('nutrievo_metas_v4')) ||
                       { k: 2150, p: 165, c: 190, f: 65, autoPeso: true };
 
-    var apiKeyActual = localStorage.getItem('nutrievo_api_key') || API_KEY_DEFAULT;
+    var savedKey = localStorage.getItem('nutrievo_api_key') || '';
+    if (savedKey.indexOf('AQ.Ab8RN6') === 0) {
+      localStorage.removeItem('nutrievo_api_key');
+      savedKey = '';
+    }
+    var apiKeyActual = savedKey || API_KEY_DEFAULT;
     var modeloActual = localStorage.getItem('nutrievo_modelo') || MODELO_DEFAULT;
     var enlacePagoActual = localStorage.getItem('nutrievo_enlace_pago') || '';
 
@@ -1340,11 +1345,23 @@
           'Peso: ' + pesoStr + ', Grasa: ' + grasaStr + '. ' +
           'Genera una frase motivadora, enérgica, de máximo 10 palabras con emojis para publicar en Stories. Devuelve SOLO esa frase sin comillas.';
 
-        var resIa = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + modeloActual + ':generateContent?key=' + apiKeyActual, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: promptComposicion }] }] })
-        });
+        var resIa;
+        if (apiKeyActual) {
+          resIa = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + modeloActual + ':generateContent?key=' + apiKeyActual, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: promptComposicion }] }] })
+          });
+        } else {
+          resIa = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              modelo: modeloActual,
+              contents: [{ parts: [{ text: promptComposicion }] }]
+            })
+          });
+        }
 
         if (resIa.ok) {
           var dataIa = await resIa.json();
@@ -1933,20 +1950,42 @@
           parts.push({ inline_data: { mime_type: 'image/jpeg', data: base64Data } });
         }
 
-        var urlApi = 'https://generativelanguage.googleapis.com/v1beta/models/' + modeloActual + ':generateContent?key=' + apiKeyActual;
-        var res = await fetch(urlApi, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: parts }] })
-        });
-
-        if (!res.ok && modeloActual !== 'gemini-2.5-flash') {
-          urlApi = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKeyActual;
+        var res;
+        if (apiKeyActual) {
+          var urlApi = 'https://generativelanguage.googleapis.com/v1beta/models/' + modeloActual + ':generateContent?key=' + apiKeyActual;
           res = await fetch(urlApi, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contents: [{ parts: parts }] })
           });
+          if (!res.ok && modeloActual !== 'gemini-2.5-flash') {
+            urlApi = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKeyActual;
+            res = await fetch(urlApi, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contents: [{ parts: parts }] })
+            });
+          }
+        } else {
+          res = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              modelo: modeloActual,
+              contents: [{ parts: parts }]
+            })
+          });
+          var testClone = await res.clone().json().catch(function() { return {}; });
+          if ((!res.ok || testClone.error) && modeloActual !== 'gemini-2.5-flash') {
+            res = await fetch('/api/gemini', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                modelo: 'gemini-2.5-flash',
+                contents: [{ parts: parts }]
+              })
+            });
+          }
         }
 
         var data = await res.json();
