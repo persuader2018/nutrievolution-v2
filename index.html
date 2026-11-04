@@ -525,7 +525,14 @@
       <p style="font-size:14px; color:var(--muted);">
         Al pulsar "Analizar Plato con IA" o "Compartir con IA Premium", los datos y fotos se procesan de forma segura a través del modelo <b>Gemini Flash 3.8</b> exclusivamente para calcular el peso de la ración, macronutrientes y generar la composición visual.
       </p>
-      <button type="button" class="btn btn-blue" id="btnAceptarInfo">Entendido</button>
+      <div style="border-top:2px solid var(--border-light); padding-top:12px; margin-top:12px;">
+        <p style="margin:0 0 8px 0; font-size:13px;"><b>💾 Portabilidad de datos (Cambiar de móvil):</b></p>
+        <div class="grid2">
+          <button type="button" class="btn btn-blue" id="btnExportarBackupModal" style="margin:0; font-size:13px; padding:10px;">⬇️ Crear Copia</button>
+          <button type="button" class="btn btn-outline" id="btnImportarBackupModal" style="margin:0; font-size:13px; padding:10px;">⬆️ Restaurar</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-outline" id="btnAceptarInfo" style="margin-top:12px;">Cerrar</button>
     </div>
   </div>
 
@@ -823,6 +830,24 @@
     <div class="card">
       <h3>🍽️ DIARIO DE COMIDAS DE HOY</h3>
       <div id="contenedorComidasAgrupadas"></div>
+    </div>
+
+    <!-- MÓDULO COPIA DE SEGURIDAD Y RESTAURACIÓN (PORTABILIDAD ENTRE MÓVILES) -->
+    <div class="card">
+      <h3>💾 Copia de Seguridad y Restauración</h3>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 10px 0;">
+        Guarda todo tu diario (comidas, favoritos, metas, historial de peso y fotografías) en un archivo para hacer una copia de seguridad o pasarlo a otro móvil:
+      </p>
+      <div class="grid2">
+        <button type="button" class="btn btn-blue" id="btnExportarBackup" style="margin-top:0; font-size:13.5px; padding:11px 10px;">
+          ⬇️ Descargar Copia
+        </button>
+        <button type="button" class="btn btn-outline" id="btnImportarBackup" style="margin-top:0; font-size:13.5px; padding:11px 10px;">
+          ⬆️ Restaurar Copia
+        </button>
+      </div>
+      <input type="file" id="inputFileBackup" accept=".json,application/json" class="hide">
+      <div id="msgBackupEstado" style="font-size:12px; color:var(--green); font-weight:800; margin-top:8px; text-align:center;" class="hide"></div>
     </div>
 
   </main>
@@ -2985,6 +3010,138 @@
         })(fechasDesc[y]);
       }
     }
+
+    // =========================================================================
+    // 12. COPIA DE SEGURIDAD Y RESTAURACIÓN COMPLETA (JSON CON FOTOS Y FAVORITOS)
+    // =========================================================================
+    function exportarCopiaSeguridadCompleta() {
+      try {
+        var payloadBackup = {
+          app: 'Nutrievolution',
+          version: 7,
+          fechaExportacion: new Date().toISOString(),
+          datos: {
+            baseDatosDiaria: baseDatosDiaria,
+            favoritosGuardados: favoritosGuardados,
+            metasCustom: metasCustom,
+            suscripcionProActiva: suscripcionProActiva,
+            modeloActual: modeloActual,
+            enlacePagoActual: enlacePagoActual
+          }
+        };
+
+        var jsonStr = JSON.stringify(payloadBackup, null, 2);
+        var blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+        var fechaHoy = new Date().toISOString().split('T')[0];
+        var nombreArchivo = 'Nutrievolution_Backup_' + fechaHoy + '.json';
+
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = nombreArchivo;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        var msgEl = document.getElementById('msgBackupEstado');
+        if (msgEl) {
+          msgEl.textContent = '✅ Copia descargada: ' + nombreArchivo;
+          msgEl.style.color = 'var(--green)';
+          msgEl.className = '';
+        }
+      } catch (err) {
+        alert('Error al generar la copia de seguridad: ' + err.message);
+      }
+    }
+
+    function restaurarCopiaSeguridadDesdeArchivo(file) {
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          var contenido = JSON.parse(ev.target.result);
+          var d = contenido.datos || contenido;
+
+          if (!d || (!d.baseDatosDiaria && !d.favoritosGuardados)) {
+            alert('⚠️ El archivo seleccionado no parece ser una copia de seguridad válida de Nutrievolution.');
+            return;
+          }
+
+          var numDias = d.baseDatosDiaria ? Object.keys(d.baseDatosDiaria).length : 0;
+          var numFavs = Array.isArray(d.favoritosGuardados) ? d.favoritosGuardados.length : 0;
+
+          var confirmar = confirm(
+            '📦 Copia de seguridad detectada:\n' +
+            '• Días en el diario (con comidas y fotos): ' + numDias + '\n' +
+            '• Alimentos favoritos: ' + numFavs + '\n\n' +
+            '¿Deseas restaurar estos datos en este dispositivo?'
+          );
+          if (!confirmar) return;
+
+          if (d.baseDatosDiaria && typeof d.baseDatosDiaria === 'object') {
+            baseDatosDiaria = d.baseDatosDiaria;
+            localStorage.setItem('nutrievo_diario_v5', JSON.stringify(baseDatosDiaria));
+          }
+          if (Array.isArray(d.favoritosGuardados)) {
+            favoritosGuardados = d.favoritosGuardados;
+            localStorage.setItem('nutrievo_favoritos_v5', JSON.stringify(favoritosGuardados));
+          }
+          if (d.metasCustom && typeof d.metasCustom === 'object') {
+            metasCustom = d.metasCustom;
+            localStorage.setItem('nutrievo_metas_v5', JSON.stringify(metasCustom));
+            document.getElementById('editMetaKcal').value = metasCustom.k || 2150;
+            document.getElementById('editMetaProt').value = metasCustom.p || 165;
+            document.getElementById('editMetaCarb').value = metasCustom.c || 190;
+            document.getElementById('editMetaGrasa').value = metasCustom.f || 65;
+          }
+          if (typeof d.suscripcionProActiva === 'boolean') {
+            suscripcionProActiva = d.suscripcionProActiva;
+            localStorage.setItem('nutrievo_pro_activo_v6', suscripcionProActiva ? 'true' : 'false');
+          }
+          if (d.modeloActual) {
+            modeloActual = d.modeloActual;
+            localStorage.setItem('nutrievo_modelo', modeloActual);
+          }
+          if (d.enlacePagoActual !== undefined) {
+            enlacePagoActual = d.enlacePagoActual;
+            localStorage.setItem('nutrievo_enlace_pago', enlacePagoActual);
+          }
+
+          actualizarEstadoVisualPro();
+          dibujarBaseDatos();
+          actualizarVista();
+
+          var msgEl = document.getElementById('msgBackupEstado');
+          if (msgEl) {
+            msgEl.textContent = '🎉 ¡Copia restaurada con éxito! (' + numDias + ' días y ' + numFavs + ' favoritos)';
+            msgEl.style.color = 'var(--green)';
+            msgEl.className = '';
+          }
+          document.getElementById('modalInfoApp').className = 'modal-foto hide';
+          alert('✅ ¡Todos tus datos, favoritos y fotos han sido restaurados correctamente!');
+        } catch (err) {
+          alert('❌ Error al leer el archivo de copia de seguridad. Asegúrate de seleccionar un archivo .json válido.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    document.getElementById('btnExportarBackup').addEventListener('click', exportarCopiaSeguridadCompleta);
+    document.getElementById('btnExportarBackupModal').addEventListener('click', exportarCopiaSeguridadCompleta);
+
+    document.getElementById('btnImportarBackup').addEventListener('click', function() {
+      document.getElementById('inputFileBackup').value = '';
+      document.getElementById('inputFileBackup').click();
+    });
+    document.getElementById('btnImportarBackupModal').addEventListener('click', function() {
+      document.getElementById('inputFileBackup').value = '';
+      document.getElementById('inputFileBackup').click();
+    });
+
+    document.getElementById('inputFileBackup').addEventListener('change', function(e) {
+      if (e.target.files && e.target.files[0]) {
+        restaurarCopiaSeguridadDesdeArchivo(e.target.files[0]);
+      }
+    });
 
     // Inicializar
     actualizarEstadoVisualPro();
